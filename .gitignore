@@ -1,0 +1,33 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Build artifacts
+node_modules/
+dist/
+build/
+
+# PDF originals (too large for git)
+*.pdf
+
+# Office temp files
+~$*
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs
+*.log
