@@ -1,0 +1,13 @@
+# Onboard Partner ISP
+
+ISP:
+  - Register to BTRC Portal [subprocess]
+  - Configure API Access
+
+BTRC Admin:
+  - Review Application
+
+System:
+  - Generate Credentials
+  - Create API Keys
+

@@ -1,0 +1,12 @@
+# Run Speed Test
+
+End User:
+  - Select Server
+
+System:
+  - Run Download Test
+  - Run Upload Test
+  - Calculate Metrics
+  - Display Results
+  - Save Results
+

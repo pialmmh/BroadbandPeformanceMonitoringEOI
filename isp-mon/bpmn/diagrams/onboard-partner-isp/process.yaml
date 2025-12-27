@@ -1,0 +1,101 @@
+# BPMN Process Definition: Onboard Partner ISP
+# This YAML defines the process data, rendered by the HTML template
+
+process:
+  id: onboard-partner-isp
+  name: Onboard Partner ISP
+  description: Process for onboarding a new ISP partner to the BTRC QoS platform
+
+lanes:
+  - id: isp
+    name: ISP
+  - id: btrc-admin
+    name: BTRC Admin
+  - id: system
+    name: System
+
+# Elements in the process (in flow order per lane)
+elements:
+  # ISP Lane
+  - id: start
+    type: start
+    lane: isp
+
+  - id: task-1
+    type: subprocess
+    num: "1"
+    name: Register to BTRC Portal
+    lane: isp
+    subprocessId: register-to-btrc-portal
+    sendsTo: task-1a  # Message flow to BTRC Admin
+
+  - id: receive-credentials
+    type: message-catch
+    lane: isp
+    receivesFrom: task-2  # Message from System
+
+  - id: task-3
+    type: task
+    num: "3"
+    name: Configure API Access
+    lane: isp
+
+  - id: end
+    type: end
+    lane: isp
+
+  # BTRC Admin Lane
+  - id: task-1a
+    type: message-catch
+    lane: btrc-admin
+    receivesFrom: task-1
+
+  - id: task-1a-review
+    type: task
+    num: "1.A"
+    name: Review Application
+    lane: btrc-admin
+
+  - id: gateway-approve
+    type: gateway-xor
+    lane: btrc-admin
+    sendsTo: receive-approval  # Message to System on approve
+
+  # System Lane
+  - id: receive-approval
+    type: message-catch
+    lane: system
+    receivesFrom: gateway-approve
+
+  - id: task-2
+    type: task
+    num: "2"
+    name: Generate Credentials
+    lane: system
+    sendsTo: receive-credentials  # Message up to ISP
+
+  - id: task-3a
+    type: task
+    num: "3.A"
+    name: Create API Keys
+    lane: system
+
+# Message flows between lanes
+messageFlows:
+  - from: task-1
+    to: task-1a
+    direction: down
+
+  - from: gateway-approve
+    to: receive-approval
+    direction: down
+
+  - from: task-2
+    to: receive-credentials
+    direction: up
+
+# Sub-processes (defined separately)
+subprocesses:
+  - id: register-to-btrc-portal
+    parentTask: "1"
+    file: ./subprocess-1-register.yaml

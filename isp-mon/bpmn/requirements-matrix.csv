@@ -1,0 +1,73 @@
+## Sheet: Features
+Feature ID,Feature Name,Description,Module
+F001,ISP Onboarding,Register and onboard partner ISPs to the platform,Data Acquisition
+F002,QoS Data Collection,Collect QoS metrics from ISPs via API/SNMP,Data Acquisition
+F003,Speed Test,End-user speed test via mobile/web app,User App
+F004,Dashboard Analytics,View KPIs and analytics dashboards,Dashboard
+
+## Sheet: Actors
+Actor ID,Actor Name,Type,Description
+A001,ISP,External,Internet Service Provider representative
+A002,BTRC Admin,Internal,BTRC regulatory officer
+A003,System,Internal,Automated system processes
+A004,End User,External,Broadband subscriber
+A005,BTRC Executive,Internal,Senior BTRC management
+
+## Sheet: Use Cases
+UC ID,Feature ID,Actor ID,Use Case Name,Description,Priority
+UC001,F001,A001,Register Company,ISP submits company registration form,Must
+UC002,F001,A001,Upload Documents,ISP uploads required documents (NID license etc),Must
+UC003,F001,A001,Verify OTP,ISP verifies mobile via OTP,Must
+UC004,F001,A002,Review Application,BTRC admin reviews ISP application,Must
+UC005,F001,A002,Approve/Reject ISP,BTRC admin approves or rejects application,Must
+UC006,F001,A003,Validate Form Data,System validates submitted form data,Must
+UC007,F001,A003,Verify NID,System verifies NID via external API,Must
+UC008,F001,A003,Generate Credentials,System generates API credentials for approved ISP,Must
+UC009,F001,A001,Configure API Access,ISP configures API keys in their system,Must
+UC010,F003,A004,Run Speed Test,End user initiates speed test,Must
+UC011,F003,A004,View Test Results,End user views download/upload/latency results,Must
+UC012,F003,A004,View Test History,End user views past test results,Should
+UC013,F004,A005,View Executive Dashboard,Executive views high-level KPI summary,Must
+UC014,F004,A002,View QoS Dashboard,Admin views detailed QoS metrics,Must
+UC015,F004,A002,Generate Reports,Admin generates custom reports,Must
+
+## Sheet: BPMN Processes
+Process ID,Feature ID,Process Name,Parent Process ID,Description
+P001,F001,Onboard Partner ISP,,Main ISP onboarding process
+P001.1,F001,Register to BTRC Portal,P001,Sub-process for portal registration
+P002,F003,Run Speed Test,,Speed test execution process
+P003,F004,Generate Report,,Report generation process
+
+## Sheet: BPMN Tasks (maps to Use Cases)
+Task ID,Process ID,Task Num,Task Name,Lane,Task Type,UC ID,Description
+T001,P001,1,Register to BTRC Portal,ISP,subprocess,UC001,Links to sub-process P001.1
+T002,P001,1.A,Review Application,BTRC Admin,task,UC004,Admin reviews submitted application
+T003,P001,2,Generate Credentials,System,task,UC008,System creates API keys
+T004,P001,3,Configure API Access,ISP,task,UC009,ISP sets up API integration
+T005,P001,3.A,Create API Keys,System,task,UC008,System provisions API access
+T011,P001.1,1.1,Fill Company Info,ISP,task,UC001,Enter company details
+T012,P001.1,1.2,Upload Documents,ISP,task,UC002,Upload NID and license docs
+T013,P001.1,1.3,Enter OTP,ISP,task,UC003,Verify mobile number
+T014,P001.1,1.1.A,Validate Form,System,task,UC006,Validate form fields
+T015,P001.1,1.2.A,Verify NID,System,task,UC007,Call NID verification API
+T016,P001.1,1.2.B,Send OTP,System,task,UC003,Send OTP to mobile
+T017,P001.1,1.3.A,Verify OTP,System,task,UC003,Validate OTP code
+
+## Sheet: BPMN Flows
+Flow ID,Process ID,From Task,To Task,Flow Type,Condition
+FL001,P001,start,T001,sequence,
+FL002,P001,T001,T002,message,Application submitted
+FL003,P001,T002,gw-approve,sequence,
+FL004,P001,gw-approve,T003,message,Approved
+FL005,P001,T003,T004,sequence,
+FL006,P001,T004,end,sequence,
+FL011,P001.1,start,T011,sequence,
+FL012,P001.1,T011,T012,sequence,
+FL013,P001.1,T012,T013,sequence,
+FL014,P001.1,T013,end,sequence,
+FL015,P001.1,T011,T014,message,Form submitted
+FL016,P001.1,T014,T015,sequence,
+FL017,P001.1,T012,T015,message,Docs uploaded
+FL018,P001.1,T015,T016,sequence,
+FL019,P001.1,T016,T013,message,OTP sent
+FL020,P001.1,T013,T017,message,OTP entered

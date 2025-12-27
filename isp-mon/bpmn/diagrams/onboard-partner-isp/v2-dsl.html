@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPMN DSL v2 - Onboard Partner ISP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-family: 'Inter', 'Roboto', sans-serif;
+      --color-process: #dbeafe;
+      --color-process-border: #2563eb;
+      --color-decision: #fef3c7;
+      --color-decision-border: #d97706;
+      --text-title: #1e3a5f;
+      --text-body: #1f2937;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-family); background: #f5f5f5; padding: 20px; }
+
+    .a4-container {
+      width: 700px;
+      margin: 0 auto 20px;
+      background: #fff;
+      padding: 48px;
+      border: 1px solid #ccc;
+    }
+    .breadcrumb { margin-bottom: 8px; font-size: 11px; color: #6b7280; }
+    h1 { color: var(--text-title); margin-bottom: 10px; font-size: 18px; font-weight: 700; }
+
+    .bpmn-diagram {
+      position: relative;
+      border: 1px solid #ddd;
+      overflow: hidden;
+    }
+
+    .connections-layer {
+      position: absolute;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .swim-lane {
+      display: flex;
+      border-bottom: 1px solid #ccc;
+    }
+    .swim-lane:last-child { border-bottom: none; }
+
+    .lane-header {
+      width: 50px;
+      min-width: 50px;
+      background: #1E3A5F;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 9px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .lane-content {
+      flex: 1;
+      position: relative;
+      background: #fafafa;
+    }
+
+    .bpmn-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    /* BPMN Start Event: thin green circle */
+    .bpmn-start {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #22c55e;
+      background: #fff;
+    }
+
+    /* BPMN End Event: thick red circle */
+    .bpmn-end {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 4px solid #dc2626;
+      background: #fff;
+    }
+
+    /* BPMN Message Catch Event: circle with envelope */
+    .bpmn-message-catch {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid #475569;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bpmn-message-catch svg {
+      width: 14px;
+      height: 11px;
+    }
+
+    .bpmn-task, .bpmn-subprocess {
+      padding: 4px 6px;
+      width: 68px;
+      text-align: center;
+      border: 2px solid;
+    }
+    .bpmn-task {
+      background: var(--color-process);
+      border-color: var(--color-process-border);
+    }
+    .bpmn-subprocess {
+      background: var(--color-decision);
+      border-color: var(--color-decision-border);
+    }
+    .task-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-title);
+      display: block;
+    }
+    .task-name {
+      font-size: 9px;
+      color: var(--text-body);
+      line-height: 1.1;
+    }
+
+    .bpmn-gateway {
+      width: 22px;
+      height: 22px;
+      background: #f3e8ff;
+      border: 2px solid #7c3aed;
+      transform: translate(-50%, -50%) rotate(45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bpmn-gateway span {
+      transform: rotate(-45deg);
+      font-size: 10px;
+      font-weight: bold;
+      color: #7c3aed;
+    }
+
+    .legend {
+      margin-top: 12px;
+      padding: 8px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 9px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 4px; }
+    .legend-icon { width: 14px; height: 14px; }
+    .legend-start { border-radius: 50%; border: 2px solid #22c55e; background: #fff; }
+    .legend-end { border-radius: 50%; border: 3px solid #dc2626; background: #fff; }
+    .legend-task { background: #dbeafe; border: 1px solid #2563eb; font-size: 7px; display: flex; align-items: center; justify-content: center; }
+    .legend-msg { border-radius: 50%; border: 1px solid #475569; background: #fff; font-size: 8px; display: flex; align-items: center; justify-content: center; }
+    .legend-gw { background: #f3e8ff; border: 1px solid #7c3aed; transform: rotate(45deg); width: 10px; height: 10px; }
+    .legend-line { width: 20px; height: 2px; background: #475569; }
+    .legend-line-dash { width: 20px; border-top: 1px dashed #888; }
+
+    .footer { margin-top: 8px; font-size: 9px; font-style: italic; color: #6b7280; text-align: center; }
+    .page-break { margin: 20px 0; border-top: 2px dashed #999; text-align: center; font-size: 10px; color: #999; padding-top: 5px; }
+
+    /* Theme Selector */
+    .theme-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 1000;
+      font-size: 12px;
+    }
+    .theme-selector label {
+      font-weight: 600;
+      color: #333;
+      margin-right: 8px;
+    }
+    .theme-selector select {
+      padding: 4px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    @media print {
+      .theme-selector { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Theme Selector Dropdown -->
+<div class="theme-selector">
+  <label for="theme-select">Theme:</label>
+  <select id="theme-select" onchange="switchTheme(this.value)">
+    <option value="default" selected>Default</option>
+    <option value="blueprint">Blueprint</option>
+    <option value="warm">Warm</option>
+    <option value="grayscale">Grayscale</option>
+  </select>
+</div>
+
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>Onboard Partner ISP</strong></div>
+  <h1>Process: Onboard Partner ISP</h1>
+  <div id="diagram1" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-msg"><svg viewBox="0 0 24 18" style="width:10px;height:8px" fill="none" stroke="#475569" stroke-width="2"><rect x="1" y="1" width="22" height="16" rx="1"/><path d="M1 1 L12 10 L23 1"/></svg></div>Msg</div>
+    <div class="legend-item"><div class="legend-gw"></div>XOR</div>
+    <div class="legend-item"><div class="legend-line"></div>Seq</div>
+    <div class="legend-item"><div class="legend-line-dash"></div>Msg Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+</div>
+
+<div class="page-break">--- Page Break ---</div>
+
+<div class="a4-container">
+  <div class="breadcrumb">Processes > Onboard Partner ISP > <strong>1. Register to BTRC Portal</strong></div>
+  <h1>Sub-Process 1: Register to BTRC Portal</h1>
+  <div id="diagram2" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-msg"><svg viewBox="0 0 24 18" style="width:10px;height:8px" fill="none" stroke="#475569" stroke-width="2"><rect x="1" y="1" width="22" height="16" rx="1"/><path d="M1 1 L12 10 L23 1"/></svg></div>Msg</div>
+    <div class="legend-item"><div class="legend-line"></div>Seq</div>
+    <div class="legend-item"><div class="legend-line-dash"></div>Msg Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+</div>
+
+<script>
+/**
+ * BPMN Renderer - Constrained to page width
+ * Supports theming for colors and fonts
+ */
+
+// ============ THEME SYSTEM ============
+const THEMES = {
+  default: {
+    name: 'Default',
+    fonts: {
+      family: "'Inter', 'Roboto', sans-serif",
+      taskNum: { size: '11px', weight: '700' },
+      taskName: { size: '9px', weight: '400' },
+      laneHeader: { size: '9px', weight: '600' }
+    },
+    colors: {
+      // Events
+      startEvent: { border: '#22c55e', fill: '#ffffff' },
+      endEvent: { border: '#dc2626', fill: '#ffffff' },
+      messageEvent: { border: '#475569', fill: '#ffffff', icon: '#475569' },
+      // Tasks
+      task: { border: '#2563eb', fill: '#dbeafe', text: '#1e3a5f' },
+      subprocess: { border: '#d97706', fill: '#fef3c7', text: '#1e3a5f' },
+      // Gateway
+      gateway: { border: '#7c3aed', fill: '#f3e8ff', text: '#7c3aed' },
+      // Lanes (distinct colors for each lane)
+      laneHeaders: [
+        { bg: '#2563eb', text: '#ffffff' },  // Blue
+        { bg: '#059669', text: '#ffffff' },  // Green
+        { bg: '#d97706', text: '#ffffff' }   // Orange
+      ],
+      laneContent: { bg: '#fafafa', border: '#cccccc' },
+      // Flows
+      sequenceFlow: { stroke: '#475569', width: 1.5 },
+      messageFlow: { stroke: '#888888', width: 1, dash: '4,2' }
+    },
+    layout: {
+      pageWidth: 604,
+      laneHeaderWidth: 50,
+      laneHeight: 70,
+      taskWidth: 68,
+      eventSize: 24,
+      messageEventSize: 26,
+      gatewaySize: 22
+    }
+  },
+
+  // Alternative theme: Blueprint style
+  blueprint: {
+    name: 'Blueprint',
+    fonts: {
+      family: "'Courier New', monospace",
+      taskNum: { size: '10px', weight: '700' },
+      taskName: { size: '8px', weight: '400' },
+      laneHeader: { size: '9px', weight: '600' }
+    },
+    colors: {
+      startEvent: { border: '#0066cc', fill: '#ffffff' },
+      endEvent: { border: '#cc0000', fill: '#ffffff' },
+      messageEvent: { border: '#0066cc', fill: '#ffffff', icon: '#0066cc' },
+      task: { border: '#0066cc', fill: '#e6f2ff', text: '#003366' },
+      subprocess: { border: '#0066cc', fill: '#cce5ff', text: '#003366' },
+      gateway: { border: '#0066cc', fill: '#e6f2ff', text: '#0066cc' },
+      laneHeaders: [
+        { bg: '#1d4ed8', text: '#ffffff' },  // Blue
+        { bg: '#0891b2', text: '#ffffff' },  // Cyan
+        { bg: '#4f46e5', text: '#ffffff' }   // Indigo
+      ],
+      laneContent: { bg: '#f5f9fc', border: '#99c2e6' },
+      sequenceFlow: { stroke: '#0066cc', width: 1.5 },
+      messageFlow: { stroke: '#6699cc', width: 1, dash: '4,2' }
+    },
+    layout: {
+      pageWidth: 604,
+      laneHeaderWidth: 50,
+      laneHeight: 70,
+      taskWidth: 68,
+      eventSize: 24,
+      messageEventSize: 26,
+      gatewaySize: 22
+    }
+  },
+
+  // Alternative theme: Warm/Reddish (fills are warm, lines/text are dark)
+  warm: {
+    name: 'Warm',
+    fonts: {
+      family: "'Inter', 'Roboto', sans-serif",
+      taskNum: { size: '11px', weight: '700' },
+      taskName: { size: '9px', weight: '400' },
+      laneHeader: { size: '9px', weight: '600' }
+    },
+    colors: {
+      startEvent: { border: '#333333', fill: '#ffffff' },
+      endEvent: { border: '#333333', fill: '#ffffff' },
+      messageEvent: { border: '#333333', fill: '#ffffff', icon: '#333333' },
+      task: { border: '#444444', fill: '#fee2e2', text: '#1a1a1a' },
+      subprocess: { border: '#444444', fill: '#ffedd5', text: '#1a1a1a' },
+      gateway: { border: '#444444', fill: '#fecaca', text: '#333333' },
+      laneHeaders: [
+        { bg: '#be123c', text: '#ffffff' },  // Rose
+        { bg: '#ea580c', text: '#ffffff' },  // Orange
+        { bg: '#ca8a04', text: '#ffffff' }   // Yellow
+      ],
+      laneContent: { bg: '#fef2f2', border: '#e5c4c4' },
+      sequenceFlow: { stroke: '#333333', width: 1.5 },
+      messageFlow: { stroke: '#666666', width: 1, dash: '4,2' }
+    },
+    layout: {
+      pageWidth: 604,
+      laneHeaderWidth: 50,
+      laneHeight: 70,
+      taskWidth: 68,
+      eventSize: 24,
+      messageEventSize: 26,
+      gatewaySize: 22
+    }
+  },
+
+  // Alternative theme: Grayscale for printing
+  grayscale: {
+    name: 'Grayscale',
+    fonts: {
+      family: "'Inter', 'Arial', sans-serif",
+      taskNum: { size: '11px', weight: '700' },
+      taskName: { size: '9px', weight: '400' },
+      laneHeader: { size: '9px', weight: '600' }
+    },
+    colors: {
+      startEvent: { border: '#333333', fill: '#ffffff' },
+      endEvent: { border: '#000000', fill: '#ffffff' },
+      messageEvent: { border: '#666666', fill: '#ffffff', icon: '#666666' },
+      task: { border: '#666666', fill: '#f0f0f0', text: '#333333' },
+      subprocess: { border: '#333333', fill: '#e0e0e0', text: '#333333' },
+      gateway: { border: '#666666', fill: '#f5f5f5', text: '#666666' },
+      laneHeaders: [
+        { bg: '#1f2937', text: '#ffffff' },  // Charcoal
+        { bg: '#4b5563', text: '#ffffff' },  // Slate
+        { bg: '#6b7280', text: '#ffffff' }   // Gray
+      ],
+      laneContent: { bg: '#fafafa', border: '#cccccc' },
+      sequenceFlow: { stroke: '#333333', width: 1.5 },
+      messageFlow: { stroke: '#666666', width: 1, dash: '4,2' }
+    },
+    layout: {
+      pageWidth: 604,
+      laneHeaderWidth: 50,
+      laneHeight: 70,
+      taskWidth: 68,
+      eventSize: 24,
+      messageEventSize: 26,
+      gatewaySize: 22
+    }
+  }
+};
+
+// Current active theme
+let currentTheme = THEMES.default;
+
+// Helper to get theme value
+function T(path) {
+  return path.split('.').reduce((obj, key) => obj?.[key], currentTheme);
+}
+
+// Fixed dimensions from theme
+const PAGE_CONTENT_WIDTH = T('layout.pageWidth');
+const LANE_HEADER_WIDTH = T('layout.laneHeaderWidth');
+const LANE_CONTENT_WIDTH = PAGE_CONTENT_WIDTH - LANE_HEADER_WIDTH;
+const LANE_HEIGHT = T('layout.laneHeight');
+
+// ============ PROCESS DATA PARSER ============
+// Parses process-data.txt into structured process objects
+
+function parseProcessData(text) {
+  const processes = [];
+  const sections = text.split(/={3,}\s*\n/).filter(s => s.trim());
+
+  for (let i = 0; i < sections.length; i += 2) {
+    const header = sections[i];
+    const body = sections[i + 1] || '';
+
+    const nameMatch = header.match(/(?:PROCESS|SUBPROCESS):\s*(.+)/);
+    if (!nameMatch) continue;
+
+    const processName = nameMatch[1].trim();
+    const process = { name: processName, lanes: [], nodes: [], connections: [] };
+
+    // Parse lanes
+    const lanesMatch = body.match(/LANES:\s*\n([\s\S]*?)(?=\nNODES:|$)/);
+    if (lanesMatch) {
+      const laneLines = lanesMatch[1].match(/^\s*-\s*(.+)/gm) || [];
+      process.lanes = laneLines.map(line => {
+        const name = line.replace(/^\s*-\s*/, '').trim();
+        const id = name.toLowerCase().replace(/\s+/g, '-');
+        return { id, name: name.replace(' ', '<br>') };
+      });
+    }
+
+    // Parse nodes by lane
+    const nodesMatch = body.match(/NODES:\s*\n([\s\S]*?)(?=\nFLOWS:|$)/);
+    if (nodesMatch) {
+      let currentLane = null;
+      const nodeLines = nodesMatch[1].split('\n');
+
+      for (const line of nodeLines) {
+        // Check for lane header
+        const laneHeader = line.match(/^\s{2}(\w[\w\s]*?):\s*$/);
+        if (laneHeader) {
+          currentLane = laneHeader[1].trim().toLowerCase().replace(/\s+/g, '-');
+          continue;
+        }
+
+        // Check for node definition
+        const nodeMatch = line.match(/^\s*-\s*(.+?)\s+x:(\d+)(?:\s+(task|subprocess|message-catch|gateway-xor))?\s*$/);
+        if (nodeMatch && currentLane) {
+          const rawName = nodeMatch[1].trim();
+          const x = parseInt(nodeMatch[2]);
+          let type = nodeMatch[3] || 'task';
+
+          // Determine type from name
+          if (rawName === 'start') type = 'start';
+          else if (rawName === 'end') type = 'end';
+          else if (rawName.startsWith('recv-') || rawName.startsWith('gw-')) {
+            if (rawName.startsWith('gw-')) type = 'gateway-xor';
+          }
+
+          // Parse task number and name
+          const taskMatch = rawName.match(/^([\d.]+[A-Z]?)\.\s*(.+)$/);
+          let id, num, name;
+
+          if (taskMatch) {
+            num = taskMatch[1];
+            name = taskMatch[2].replace(/\s+/g, '<br>');
+            id = 't' + num.replace(/\./g, '').toLowerCase();
+          } else {
+            id = rawName;
+            num = null;
+            name = null;
+          }
+
+          const node = { id, type, lane: currentLane, x };
+          if (num) node.num = num;
+          if (name) node.name = name;
+
+          process.nodes.push(node);
+        }
+      }
+    }
+
+    // Parse flows
+    const flowsMatch = body.match(/FLOWS:\s*\n([\s\S]*?)$/);
+    if (flowsMatch) {
+      const flowSection = flowsMatch[1];
+
+      // Sequence flows (→)
+      const seqFlows = flowSection.match(/^\s*-\s*(.+?)\s*→\s*(.+?)\s*$/gm) || [];
+      for (const flow of seqFlows) {
+        const match = flow.match(/-\s*(.+?)\s*→\s*(.+)/);
+        if (match) {
+          const from = normalizeNodeId(match[1].trim());
+          const to = normalizeNodeId(match[2].trim());
+          process.connections.push({ from, to, type: 'sequence' });
+        }
+      }
+
+      // Message flows (⇢)
+      const msgFlows = flowSection.match(/^\s*-\s*(.+?)\s*⇢\s*(.+?)\s*$/gm) || [];
+      for (const flow of msgFlows) {
+        const match = flow.match(/-\s*(.+?)\s*⇢\s*(.+)/);
+        if (match) {
+          const from = normalizeNodeId(match[1].trim());
+          const to = normalizeNodeId(match[2].trim());
+          process.connections.push({ from, to, type: 'message' });
+        }
+      }
+    }
+
+    processes.push(process);
+  }
+
+  return processes;
+}
+
+function normalizeNodeId(name) {
+  // Convert task numbers to IDs (e.g., "1.1" → "t11", "1.A" → "t1a")
+  if (/^[\d.]+[A-Z]?$/.test(name)) {
+    return 't' + name.replace(/\./g, '').toLowerCase();
+  }
+  return name;
+}
+
+// Loaded process data (will be populated async)
+let process1 = null;
+let process2 = null;
+
+// Load and parse process data from text file
+async function loadProcessData() {
+  try {
+    const response = await fetch('process-data.txt');
+    const text = await response.text();
+    const processes = parseProcessData(text);
+
+    if (processes.length >= 2) {
+      process1 = processes[0];
+      process2 = processes[1];
+    }
+
+    // Render diagrams after loading
+    renderDiagrams();
+  } catch (error) {
+    console.error('Failed to load process-data.txt:', error);
+    // Fallback to embedded data if file not found
+    useFallbackData();
+  }
+}
+
+function useFallbackData() {
+  console.warn('Using fallback embedded data');
+  process1 = {
+    lanes: [{ id: "isp", name: "ISP" }, { id: "btrc-admin", name: "BTRC<br>Admin" }, { id: "system", name: "System" }],
+    nodes: [
+      { id: "start", type: "start", lane: "isp", x: 5 },
+      { id: "t1", type: "subprocess", lane: "isp", num: "1", name: "Register to<br>BTRC Portal", x: 18 },
+      { id: "recv-creds", type: "message-catch", lane: "isp", x: 60 },
+      { id: "t3", type: "task", lane: "isp", num: "3", name: "Configure<br>API Access", x: 75 },
+      { id: "end", type: "end", lane: "isp", x: 95 },
+      { id: "recv-app", type: "message-catch", lane: "btrc-admin", x: 18 },
+      { id: "t1a", type: "task", lane: "btrc-admin", num: "1.A", name: "Review<br>Application", x: 35 },
+      { id: "gw-approve", type: "gateway-xor", lane: "btrc-admin", x: 50 },
+      { id: "recv-approval", type: "message-catch", lane: "system", x: 50 },
+      { id: "t2", type: "task", lane: "system", num: "2", name: "Generate<br>Credentials", x: 65 },
+      { id: "t3a", type: "task", lane: "system", num: "3.A", name: "Create<br>API Keys", x: 82 }
+    ],
+    connections: [
+      { from: "start", to: "t1", type: "sequence" },
+      { from: "t1", to: "recv-creds", type: "sequence" },
+      { from: "recv-creds", to: "t3", type: "sequence" },
+      { from: "t3", to: "end", type: "sequence" },
+      { from: "recv-app", to: "t1a", type: "sequence" },
+      { from: "t1a", to: "gw-approve", type: "sequence" },
+      { from: "recv-approval", to: "t2", type: "sequence" },
+      { from: "t2", to: "t3a", type: "sequence" },
+      { from: "t1", to: "recv-app", type: "message" },
+      { from: "gw-approve", to: "recv-approval", type: "message" },
+      { from: "t2", to: "recv-creds", type: "message" }
+    ]
+  };
+  process2 = {
+    lanes: [{ id: "isp", name: "ISP" }, { id: "system", name: "System" }],
+    nodes: [
+      { id: "start", type: "start", lane: "isp", x: 3 },
+      { id: "t11", type: "task", lane: "isp", num: "1.1", name: "Fill<br>Info", x: 13 },
+      { id: "t12", type: "task", lane: "isp", num: "1.2", name: "Upload<br>Docs", x: 35 },
+      { id: "recv-otp", type: "message-catch", lane: "isp", x: 63 },
+      { id: "t13", type: "task", lane: "isp", num: "1.3", name: "Enter<br>OTP", x: 78 },
+      { id: "end", type: "end", lane: "isp", x: 95 },
+      { id: "recv-form", type: "message-catch", lane: "system", x: 13 },
+      { id: "t11a", type: "task", lane: "system", num: "1.1.A", name: "Validate<br>Form", x: 24 },
+      { id: "recv-docs", type: "message-catch", lane: "system", x: 35 },
+      { id: "t12a", type: "task", lane: "system", num: "1.2.A", name: "Verify<br>NID", x: 48 },
+      { id: "t12b", type: "task", lane: "system", num: "1.2.B", name: "Send<br>OTP", x: 63 },
+      { id: "recv-otp-entry", type: "message-catch", lane: "system", x: 78 },
+      { id: "t13a", type: "task", lane: "system", num: "1.3.A", name: "Verify<br>OTP", x: 90 }
+    ],
+    connections: [
+      { from: "start", to: "t11", type: "sequence" },
+      { from: "t11", to: "t12", type: "sequence" },
+      { from: "t12", to: "recv-otp", type: "sequence" },
+      { from: "recv-otp", to: "t13", type: "sequence" },
+      { from: "t13", to: "end", type: "sequence" },
+      { from: "recv-form", to: "t11a", type: "sequence" },
+      { from: "t11a", to: "recv-docs", type: "sequence" },
+      { from: "recv-docs", to: "t12a", type: "sequence" },
+      { from: "t12a", to: "t12b", type: "sequence" },
+      { from: "t12b", to: "recv-otp-entry", type: "sequence" },
+      { from: "recv-otp-entry", to: "t13a", type: "sequence" },
+      { from: "t11", to: "recv-form", type: "message" },
+      { from: "t12", to: "recv-docs", type: "message" },
+      { from: "t12b", to: "recv-otp", type: "message" },
+      { from: "t13", to: "recv-otp-entry", type: "message" }
+    ]
+  };
+  renderDiagrams();
+}
+
+// ============ RENDERER ============
+class BpmnRenderer {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.positions = {};
+  }
+
+  render(data) {
+    const { lanes, nodes, connections } = data;
+    const totalHeight = lanes.length * LANE_HEIGHT;
+
+    // Build HTML
+    let html = `<svg class="connections-layer" width="${PAGE_CONTENT_WIDTH}" height="${totalHeight}"></svg>`;
+
+    lanes.forEach((lane, idx) => {
+      const headers = T('colors.laneHeaders');
+      const headerStyle = headers[idx % headers.length];
+      html += `
+        <div class="swim-lane" style="height:${LANE_HEIGHT}px;border-color:${T('colors.laneContent.border')}">
+          <div class="lane-header" style="background:${headerStyle.bg};color:${headerStyle.text}">${lane.name}</div>
+          <div class="lane-content" style="background:${T('colors.laneContent.bg')}"></div>
+        </div>`;
+    });
+
+    this.container.innerHTML = html;
+    this.container.style.width = PAGE_CONTENT_WIDTH + 'px';
+
+    // Place nodes
+    const laneContents = this.container.querySelectorAll('.lane-content');
+    nodes.forEach(node => {
+      const laneIdx = lanes.findIndex(l => l.id === node.lane);
+      const laneContent = laneContents[laneIdx];
+      const el = this.createNodeElement(node);
+      laneContent.appendChild(el);
+
+      // Store position for connections
+      const xPx = (node.x / 100) * LANE_CONTENT_WIDTH;
+      this.positions[node.id] = {
+        x: LANE_HEADER_WIDTH + xPx,
+        y: laneIdx * LANE_HEIGHT + LANE_HEIGHT / 2,
+        laneIdx,
+        el
+      };
+    });
+
+    // Draw connections after layout
+    requestAnimationFrame(() => this.drawConnections(connections));
+  }
+
+  createNodeElement(node) {
+    const el = document.createElement('div');
+    el.className = 'bpmn-node';
+    el.dataset.nodeId = node.id;
+    el.style.left = node.x + '%';
+    el.style.top = '50%';
+
+    switch (node.type) {
+      case 'start':
+        el.classList.add('bpmn-start');
+        el.style.borderColor = T('colors.startEvent.border');
+        el.style.background = T('colors.startEvent.fill');
+        break;
+      case 'end':
+        el.classList.add('bpmn-end');
+        el.style.borderColor = T('colors.endEvent.border');
+        el.style.background = T('colors.endEvent.fill');
+        break;
+      case 'task':
+        el.classList.add('bpmn-task');
+        el.style.borderColor = T('colors.task.border');
+        el.style.background = T('colors.task.fill');
+        el.innerHTML = `<span class="task-num" style="color:${T('colors.task.text')}">${node.num}</span><span class="task-name">${node.name}</span>`;
+        break;
+      case 'subprocess':
+        el.classList.add('bpmn-subprocess');
+        el.style.borderColor = T('colors.subprocess.border');
+        el.style.background = T('colors.subprocess.fill');
+        el.innerHTML = `<span class="task-num" style="color:${T('colors.subprocess.text')}">${node.num}</span><span class="task-name">${node.name}</span>`;
+        break;
+      case 'message-catch':
+        el.classList.add('bpmn-message-catch');
+        el.style.borderColor = T('colors.messageEvent.border');
+        el.style.background = T('colors.messageEvent.fill');
+        const iconColor = T('colors.messageEvent.icon');
+        el.innerHTML = `<svg viewBox="0 0 24 18" fill="none" stroke="${iconColor}" stroke-width="2">
+          <rect x="1" y="1" width="22" height="16" rx="1"/>
+          <path d="M1 1 L12 10 L23 1"/>
+        </svg>`;
+        break;
+      case 'gateway-xor':
+        el.classList.add('bpmn-gateway');
+        el.style.borderColor = T('colors.gateway.border');
+        el.style.background = T('colors.gateway.fill');
+        el.innerHTML = `<span style="color:${T('colors.gateway.text')}">X</span>`;
+        break;
+    }
+    return el;
+  }
+
+  drawConnections(connections) {
+    const svg = this.container.querySelector('.connections-layer');
+    const seqColor = T('colors.sequenceFlow.stroke');
+    const seqWidth = T('colors.sequenceFlow.width');
+    const msgColor = T('colors.messageFlow.stroke');
+    const msgWidth = T('colors.messageFlow.width');
+    const msgDash = T('colors.messageFlow.dash');
+
+    let content = `
+      <defs>
+        <marker id="arr-s" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="${seqColor}"/>
+        </marker>
+        <marker id="arr-m" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+          <polygon points="0 0,6 2.5,0 5" fill="${msgColor}"/>
+        </marker>
+      </defs>`;
+
+    connections.forEach(c => {
+      const from = this.positions[c.from];
+      const to = this.positions[c.to];
+      if (!from || !to) return;
+
+      const fromEl = from.el;
+      const toEl = to.el;
+      const fromW = fromEl.offsetWidth / 2;
+      const fromH = fromEl.offsetHeight / 2;
+      const toW = toEl.offsetWidth / 2;
+      const toH = toEl.offsetHeight / 2;
+
+      if (c.type === 'sequence') {
+        const x1 = from.x + fromW;
+        const y1 = from.y;
+        const x2 = to.x - toW;
+        const y2 = to.y;
+
+        let path;
+        if (Math.abs(y1 - y2) < 2) {
+          path = `M${x1},${y1} L${x2},${y2}`;
+        } else {
+          const midX = x1 + 12;
+          path = `M${x1},${y1} H${midX} V${y2} H${x2}`;
+        }
+        content += `<path d="${path}" stroke="${seqColor}" stroke-width="${seqWidth}" fill="none" marker-end="url(#arr-s)"/>`;
+
+      } else {
+        // Message flow - vertical
+        const goDown = from.laneIdx < to.laneIdx;
+        const x1 = from.x;
+        const y1 = goDown ? from.y + fromH : from.y - fromH;
+        const x2 = to.x;
+        const y2 = goDown ? to.y - toH : to.y + toH;
+
+        let path;
+        if (Math.abs(x1 - x2) < 3) {
+          path = `M${x1},${y1} V${y2}`;
+        } else {
+          const midY = (y1 + y2) / 2;
+          path = `M${x1},${y1} V${midY} H${x2} V${y2}`;
+        }
+        content += `<path d="${path}" stroke="${msgColor}" stroke-width="${msgWidth}" stroke-dasharray="${msgDash}" fill="none" marker-end="url(#arr-m)"/>`;
+      }
+    });
+
+    svg.innerHTML = content;
+  }
+}
+
+// ============ THEME SWITCHING ============
+/**
+ * Switch to a different theme and re-render diagrams
+ * Usage: switchTheme('blueprint') or switchTheme('grayscale')
+ * Available themes: 'default', 'blueprint', 'grayscale'
+ */
+function switchTheme(themeName) {
+  if (THEMES[themeName]) {
+    currentTheme = THEMES[themeName];
+    // Re-render diagrams
+    new BpmnRenderer('diagram1').render(process1);
+    new BpmnRenderer('diagram2').render(process2);
+    console.log(`Theme switched to: ${currentTheme.name}`);
+  } else {
+    console.error(`Theme '${themeName}' not found. Available: ${Object.keys(THEMES).join(', ')}`);
+  }
+}
+
+// Render diagrams function (called after data loads)
+function renderDiagrams() {
+  if (process1) new BpmnRenderer('diagram1').render(process1);
+  if (process2) new BpmnRenderer('diagram2').render(process2);
+}
+
+// Load data and render
+loadProcessData();
+</script>
+
+</body>
+</html>

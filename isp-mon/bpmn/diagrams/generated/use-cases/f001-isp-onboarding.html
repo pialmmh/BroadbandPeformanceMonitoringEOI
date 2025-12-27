@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8">
+  <title>Use Case: ISP Onboarding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 32px; border: 1px solid #ccc; }
+    h1 { color: #1E3A5F; font-size: 20px; }
+    .diagram { text-align: center; margin: 20px 0; background: #fafafa; border: 1px solid #e0e0e0; padding: 20px; min-height: 200px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 11px; }
+    th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+    th { background: #1E3A5F; color: white; }
+    .footer { margin-top: 16px; font-size: 10px; color: #888; text-align: center; }
+  </style>
+</head><body>
+<div class="container">
+  <h1>Use Case: ISP Onboarding</h1>
+  <p style="font-size:12px;color:#666">Register and onboard partner ISPs to the platform (ToR 3.2)</p>
+  <div class="diagram"><img id="diagram" alt="Loading..."></div>
+  <table>
+    <tr><th>ID</th><th>Actor</th><th>Use Case</th><th>Description</th><th>Priority</th></tr>
+    <tr><td>UC001</td><td>ISP</td><td>Register Company</td><td>ISP submits company registration form</td><td>Must</td></tr><tr><td>UC002</td><td>ISP</td><td>Upload Documents</td><td>ISP uploads required documents (NID, license)</td><td>Must</td></tr><tr><td>UC003</td><td>ISP</td><td>Verify OTP</td><td>ISP verifies mobile via OTP</td><td>Must</td></tr><tr><td>UC004</td><td>BTRC Admin</td><td>Review Application</td><td>BTRC admin reviews ISP application</td><td>Must</td></tr><tr><td>UC005</td><td>BTRC Admin</td><td>Approve/Reject ISP</td><td>BTRC admin approves or rejects application</td><td>Must</td></tr><tr><td>UC006</td><td>System</td><td>Validate Form Data</td><td>System validates submitted form data</td><td>Must</td></tr><tr><td>UC007</td><td>System</td><td>Verify NID</td><td>System verifies NID via external API</td><td>Must</td></tr><tr><td>UC008</td><td>System</td><td>Generate Credentials</td><td>System generates API credentials</td><td>Must</td></tr><tr><td>UC009</td><td>ISP</td><td>Configure API Access</td><td>ISP configures API keys in their system</td><td>Must</td></tr>
+  </table>
+  <div class="footer">Generated from requirements-matrix.xlsx</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+<script>
+const puml = "@startuml\nskinparam backgroundColor #FAFAFA\nskinparam packageStyle rectangle\nskinparam actorStyle awesome\nskinparam usecase {\n  BackgroundColor #dbeafe\n  BorderColor #2563eb\n}\n\ntitle ISP Onboarding\n\nactor \"ISP\" as ISP\nactor \"BTRC Admin\" as BTRC_Admin\nactor \"System\" as System\n\nrectangle \"ISP Onboarding\" {\n  usecase \"Register Company\" as UC001\n  usecase \"Upload Documents\" as UC002\n  usecase \"Verify OTP\" as UC003\n  usecase \"Review Application\" as UC004\n  usecase \"Approve/Reject ISP\" as UC005\n  usecase \"Validate Form Data\" as UC006\n  usecase \"Verify NID\" as UC007\n  usecase \"Generate Credentials\" as UC008\n  usecase \"Configure API Access\" as UC009\n}\n\nISP --> UC001\nISP --> UC002\nISP --> UC003\nBTRC_Admin --> UC004\nBTRC_Admin --> UC005\nSystem --> UC006\nSystem --> UC007\nSystem --> UC008\nISP --> UC009\n@enduml\n";
+function encode64(d){let r="";for(let i=0;i<d.length;i+=3){if(i+2==d.length)r+=app3(d.charCodeAt(i),d.charCodeAt(i+1),0);else if(i+1==d.length)r+=app3(d.charCodeAt(i),0,0);else r+=app3(d.charCodeAt(i),d.charCodeAt(i+1),d.charCodeAt(i+2));}return r;}
+function app3(b1,b2,b3){let c1=b1>>2,c2=((b1&0x3)<<4)|(b2>>4),c3=((b2&0xF)<<2)|(b3>>6),c4=b3&0x3F;return enc6(c1&0x3F)+enc6(c2&0x3F)+enc6(c3&0x3F)+enc6(c4&0x3F);}
+function enc6(b){if(b<10)return String.fromCharCode(48+b);b-=10;if(b<26)return String.fromCharCode(65+b);b-=26;if(b<26)return String.fromCharCode(97+b);b-=26;if(b==0)return'-';if(b==1)return'_';return'?';}
+const data=new TextEncoder().encode(puml);const compressed=pako.deflateRaw(data,{level:9});const encoded=encode64(String.fromCharCode.apply(null,compressed));
+document.getElementById('diagram').src='https://www.plantuml.com/plantuml/svg/'+encoded;
+</script>
+</body></html>

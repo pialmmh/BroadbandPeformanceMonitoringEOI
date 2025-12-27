@@ -1,0 +1,59 @@
+security
+	0 trust
+	hard token
+	HSM
+	DDos detection and protection
+
+doc
+	overview
+	case study, success stories
+crowd sourcing 
+	app
+	website
+	browser
+	marketing
+		pulish ad, data package incentives
+DPI/Probe
+voice and video quality
+	webrtc
+	youtube/netflix
+open source tools
+	grafana, influxdb, telegraf
+paid/open source data from foregin provider
+	cloud-flare
+	
+AI integration
+	- summarize network reports and actions
+	- summarize user complaints
+	- generate alert for btrc user,  draft action email to ISPs
+	- optionally automatically send emails
+	- dynamic dashboard
+	- human query about everything in natural language
+	- Shuvom doc
+
+QOS
+NMS dashboard AIOB
+curretn QoS Regulation
+EU or donars
+	funding
+	uttal buet sr. vai.
+
+
+D.3 Threat Intelligence Feeds
+
+AbuseIPDB (free/paid)
+
+Spamhaus (DNSBL, DROP lists)
+
+Shadowserver Foundation (free for regulators)
+
+CISA / FIRST feeds
+
+Use Cases:
+
+National botnet monitoring
+
+ISP security maturity scoring
+
+Early warning dashboards
+

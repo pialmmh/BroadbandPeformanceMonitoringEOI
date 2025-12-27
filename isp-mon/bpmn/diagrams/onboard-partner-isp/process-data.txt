@@ -1,0 +1,94 @@
+# BPMN Process Definitions
+# Format: Indented bullets for hierarchy
+# Types: start, end, task, subprocess, message-catch, gateway-xor
+# x: position as % of lane width (0-100)
+
+===================================================
+PROCESS: Onboard Partner ISP
+===================================================
+
+LANES:
+  - ISP
+  - BTRC Admin
+  - System
+
+NODES:
+  ISP:
+    - start                           x:5
+    - 1. Register to BTRC Portal      x:18   subprocess
+    - recv-creds                      x:60   message-catch
+    - 3. Configure API Access         x:75   task
+    - end                             x:95
+
+  BTRC Admin:
+    - recv-app                        x:18   message-catch
+    - 1.A Review Application          x:35   task
+    - gw-approve                      x:50   gateway-xor
+
+  System:
+    - recv-approval                   x:50   message-catch
+    - 2. Generate Credentials         x:65   task
+    - 3.A Create API Keys             x:82   task
+
+FLOWS:
+  Sequence:
+    - start → 1
+    - 1 → recv-creds
+    - recv-creds → 3
+    - 3 → end
+    - recv-app → 1.A
+    - 1.A → gw-approve
+    - recv-approval → 2
+    - 2 → 3.A
+
+  Message:
+    - 1 ⇢ recv-app
+    - gw-approve ⇢ recv-approval
+    - 2 ⇢ recv-creds
+
+
+===================================================
+SUBPROCESS: 1. Register to BTRC Portal
+===================================================
+
+LANES:
+  - ISP
+  - System
+
+NODES:
+  ISP:
+    - start                           x:3
+    - 1.1 Fill Info                   x:13   task
+    - 1.2 Upload Docs                 x:35   task
+    - recv-otp                        x:63   message-catch
+    - 1.3 Enter OTP                   x:78   task
+    - end                             x:95
+
+  System:
+    - recv-form                       x:13   message-catch
+    - 1.1.A Validate Form             x:24   task
+    - recv-docs                       x:35   message-catch
+    - 1.2.A Verify NID                x:48   task
+    - 1.2.B Send OTP                  x:63   task
+    - recv-otp-entry                  x:78   message-catch
+    - 1.3.A Verify OTP                x:90   task
+
+FLOWS:
+  Sequence:
+    - start → 1.1
+    - 1.1 → 1.2
+    - 1.2 → recv-otp
+    - recv-otp → 1.3
+    - 1.3 → end
+    - recv-form → 1.1.A
+    - 1.1.A → recv-docs
+    - recv-docs → 1.2.A
+    - 1.2.A → 1.2.B
+    - 1.2.B → recv-otp-entry
+    - recv-otp-entry → 1.3.A
+
+  Message:
+    - 1.1 ⇢ recv-form
+    - 1.2 ⇢ recv-docs
+    - 1.2.B ⇢ recv-otp
+    - 1.3 ⇢ recv-otp-entry

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mxGraph BPMN - Onboard Partner ISP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .a4-container {
+      width: 700px;
+      margin: 0 auto 20px;
+      background: #fff;
+      padding: 48px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .breadcrumb {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1e3a5f;
+      margin-bottom: 16px;
+    }
+    .graph-container {
+      border: 1px solid #e0e0e0;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      padding: 12px;
+      background: #fafafa;
+      border: 1px solid #e5e7eb;
+      font-size: 11px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-start {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #cddc39;
+      border: 2px solid #7cb342;
+    }
+    .legend-end {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ffcdd2;
+      border: 3px solid #e53935;
+    }
+    .legend-task {
+      width: 28px;
+      height: 18px;
+      background: #bbdefb;
+      border: 1px solid #1976d2;
+      border-radius: 3px;
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .legend-subprocess {
+      width: 28px;
+      height: 18px;
+      background: #fff9c4;
+      border: 2px solid #f9a825;
+      border-radius: 3px;
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .legend-gateway {
+      width: 16px;
+      height: 16px;
+      background: #fff9c4;
+      border: 1px solid #f9a825;
+      transform: rotate(45deg);
+    }
+    .legend-message {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid #666;
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .legend-seq {
+      width: 28px;
+      height: 0;
+      border-top: 1.5px solid #000;
+    }
+    .legend-msg {
+      width: 28px;
+      height: 0;
+      border-top: 1.5px dashed #000;
+    }
+    .footer {
+      margin-top: 16px;
+      font-size: 10px;
+      font-style: italic;
+      color: #6b7280;
+      text-align: center;
+    }
+    .page-break {
+      margin: 20px 0;
+      border-top: 2px dashed #999;
+      text-align: center;
+      font-size: 10px;
+      color: #999;
+      padding-top: 5px;
+    }
+  </style>
+  <!-- mxGraph Library from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mxgraph@4.2.2/javascript/mxClient.min.js"></script>
+</head>
+<body>
+
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>Onboard Partner ISP</strong></div>
+  <h1>Process: Onboard Partner ISP</h1>
+  <div id="graph1" class="graph-container" style="height: 310px;"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-subprocess">N</div>Sub-Process</div>
+    <div class="legend-item"><div class="legend-gateway"></div>XOR Gateway</div>
+    <div class="legend-item"><div class="legend-message">✉</div>Message</div>
+    <div class="legend-item"><div class="legend-seq"></div>Sequence</div>
+    <div class="legend-item"><div class="legend-msg"></div>Message Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+</div>
+
+<div class="page-break">--- Page Break ---</div>
+
+<div class="a4-container">
+  <div class="breadcrumb">Processes > Onboard Partner ISP > <strong>1. Register to BTRC Portal</strong></div>
+  <h1>Sub-Process 1: Register to BTRC Portal</h1>
+  <div id="graph2" class="graph-container" style="height: 240px;"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-message">✉</div>Message</div>
+    <div class="legend-item"><div class="legend-seq"></div>Sequence</div>
+    <div class="legend-item"><div class="legend-msg"></div>Message Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+</div>
+
+<script>
+// ============ DSL Data ============
+
+const process1 = {
+  id: "onboard-partner-isp",
+  name: "Onboard Partner ISP",
+  lanes: [
+    { id: "isp", name: "ISP" },
+    { id: "btrc", name: "BTRC Admin" },
+    { id: "system", name: "System" }
+  ],
+  nodes: [
+    { id: "start", type: "start", lane: "isp", x: 0 },
+    { id: "t1", type: "subprocess", lane: "isp", num: "1", name: "Register to\nBTRC Portal", x: 1 },
+    { id: "recv-creds", type: "message-catch", lane: "isp", x: 3.5 },
+    { id: "t3", type: "task", lane: "isp", num: "3", name: "Configure\nAPI Access", x: 4.5 },
+    { id: "end", type: "end", lane: "isp", x: 5.5 },
+    { id: "recv-app", type: "message-catch", lane: "btrc", x: 1 },
+    { id: "t1a", type: "task", lane: "btrc", num: "1.A", name: "Review\nApplication", x: 2 },
+    { id: "gw-approve", type: "gateway-xor", lane: "btrc", x: 3 },
+    { id: "recv-approval", type: "message-catch", lane: "system", x: 3 },
+    { id: "t2", type: "task", lane: "system", num: "2", name: "Generate\nCredentials", x: 4 },
+    { id: "t3a", type: "task", lane: "system", num: "3.A", name: "Create\nAPI Keys", x: 5 }
+  ],
+  connections: [
+    { from: "start", to: "t1", type: "sequence" },
+    { from: "t1", to: "recv-creds", type: "sequence" },
+    { from: "recv-creds", to: "t3", type: "sequence" },
+    { from: "t3", to: "end", type: "sequence" },
+    { from: "recv-app", to: "t1a", type: "sequence" },
+    { from: "t1a", to: "gw-approve", type: "sequence" },
+    { from: "recv-approval", to: "t2", type: "sequence" },
+    { from: "t2", to: "t3a", type: "sequence" },
+    { from: "t1", to: "recv-app", type: "message" },
+    { from: "gw-approve", to: "recv-approval", type: "message" },
+    { from: "t2", to: "recv-creds", type: "message" }
+  ]
+};
+
+const process2 = {
+  id: "register-to-btrc-portal",
+  name: "Register to BTRC Portal",
+  lanes: [
+    { id: "isp", name: "ISP" },
+    { id: "system", name: "System" }
+  ],
+  nodes: [
+    { id: "start", type: "start", lane: "isp", x: 0 },
+    { id: "t11", type: "task", lane: "isp", num: "1.1", name: "Fill Company\nInformation", x: 1 },
+    { id: "t12", type: "task", lane: "isp", num: "1.2", name: "Upload NID\n& Documents", x: 2 },
+    { id: "recv-otp", type: "message-catch", lane: "isp", x: 3.2 },
+    { id: "t13", type: "task", lane: "isp", num: "1.3", name: "Enter OTP\nCode", x: 4 },
+    { id: "end", type: "end", lane: "isp", x: 5 },
+    { id: "recv-form", type: "message-catch", lane: "system", x: 1 },
+    { id: "t11a", type: "task", lane: "system", num: "1.1.A", name: "Validate\nForm Data", x: 1.6 },
+    { id: "recv-docs", type: "message-catch", lane: "system", x: 2 },
+    { id: "t12a", type: "task", lane: "system", num: "1.2.A", name: "Verify NID\nvia API", x: 2.6 },
+    { id: "t12b", type: "task", lane: "system", num: "1.2.B", name: "Send\nOTP", x: 3.2 },
+    { id: "recv-otp-entry", type: "message-catch", lane: "system", x: 4 },
+    { id: "t13a", type: "task", lane: "system", num: "1.3.A", name: "Verify\nOTP", x: 4.6 }
+  ],
+  connections: [
+    { from: "start", to: "t11", type: "sequence" },
+    { from: "t11", to: "t12", type: "sequence" },
+    { from: "t12", to: "recv-otp", type: "sequence" },
+    { from: "recv-otp", to: "t13", type: "sequence" },
+    { from: "t13", to: "end", type: "sequence" },
+    { from: "recv-form", to: "t11a", type: "sequence" },
+    { from: "t11a", to: "recv-docs", type: "sequence" },
+    { from: "recv-docs", to: "t12a", type: "sequence" },
+    { from: "t12a", to: "t12b", type: "sequence" },
+    { from: "t12b", to: "recv-otp-entry", type: "sequence" },
+    { from: "recv-otp-entry", to: "t13a", type: "sequence" },
+    { from: "t11", to: "recv-form", type: "message" },
+    { from: "t12", to: "recv-docs", type: "message" },
+    { from: "t12b", to: "recv-otp", type: "message" },
+    { from: "t13", to: "recv-otp-entry", type: "message" }
+  ]
+};
+
+// ============ Draw.io Style Colors ============
+const STYLES = {
+  // draw.io BPMN colors
+  task: {
+    fill: '#dae8fc',      // Light blue
+    stroke: '#6c8ebf',    // Blue border
+    font: '#333333'
+  },
+  subprocess: {
+    fill: '#fff2cc',      // Light yellow
+    stroke: '#d6b656',    // Gold border
+    font: '#333333'
+  },
+  gateway: {
+    fill: '#fff2cc',      // Light yellow
+    stroke: '#d6b656',    // Gold border
+    font: '#333333'
+  },
+  start: {
+    fill: '#cddc39',      // Lime green
+    stroke: '#7cb342'     // Green border
+  },
+  end: {
+    fill: '#f8cecc',      // Light red
+    stroke: '#b85450'     // Red border
+  },
+  message: {
+    fill: '#ffffff',
+    stroke: '#666666'
+  },
+  lane: {
+    header: '#f5f5f5',
+    headerStroke: '#666666',
+    body: '#ffffff',
+    bodyStroke: '#666666'
+  },
+  edge: {
+    sequence: '#000000',
+    message: '#000000'
+  }
+};
+
+// Layout
+const LANE_HEIGHT = 95;
+const LANE_HEADER_WIDTH = 50;
+const CELL_WIDTH = 85;
+const START_X = 70;
+const NODE_WIDTH = 70;
+const NODE_HEIGHT = 45;
+const EVENT_SIZE = 26;
+const GATEWAY_SIZE = 34;
+
+function renderDiagram(containerId, processData) {
+  const container = document.getElementById(containerId);
+
+  if (typeof mxGraph === 'undefined') {
+    container.innerHTML = '<p style="color:red;padding:20px;">mxGraph failed to load.</p>';
+    return;
+  }
+
+  // Create graph instance
+  const graph = new mxGraph(container);
+  graph.setEnabled(false);
+  graph.setCellsSelectable(false);
+  graph.setCellsMovable(false);
+  graph.setHtmlLabels(true);
+
+  // Enable orthogonal edge routing
+  mxEdgeStyle.OrthConnector = function(state, source, target, points, result) {
+    mxEdgeStyle.SegmentConnector(state, source, target, points, result);
+  };
+
+  const parent = graph.getDefaultParent();
+
+  // Lane lookup
+  const laneLookup = {};
+  processData.lanes.forEach((lane, idx) => {
+    laneLookup[lane.id] = idx;
+  });
+
+  const totalHeight = processData.lanes.length * LANE_HEIGHT;
+
+  graph.getModel().beginUpdate();
+  try {
+    // Draw swim lanes (draw.io style with header on left)
+    processData.lanes.forEach((lane, idx) => {
+      const y = idx * LANE_HEIGHT;
+      const contentWidth = container.offsetWidth - LANE_HEADER_WIDTH - 5;
+
+      // Lane header (vertical text style like draw.io)
+      graph.insertVertex(parent, null, lane.name,
+        0, y, LANE_HEADER_WIDTH, LANE_HEIGHT,
+        `fillColor=${STYLES.lane.header};strokeColor=${STYLES.lane.headerStroke};fontColor=#333;fontSize=11;fontStyle=1;verticalAlign=middle;align=center;`
+      );
+
+      // Lane body
+      graph.insertVertex(parent, null, '',
+        LANE_HEADER_WIDTH, y, contentWidth, LANE_HEIGHT,
+        `fillColor=${STYLES.lane.body};strokeColor=${STYLES.lane.bodyStroke};`
+      );
+    });
+
+    // Create vertices for nodes
+    const vertices = {};
+
+    processData.nodes.forEach(node => {
+      const laneIdx = laneLookup[node.lane];
+      const x = START_X + node.x * CELL_WIDTH;
+      const centerY = laneIdx * LANE_HEIGHT + LANE_HEIGHT / 2;
+      let vertex, style;
+
+      switch (node.type) {
+        case 'start':
+          style = `shape=ellipse;fillColor=${STYLES.start.fill};strokeColor=${STYLES.start.stroke};strokeWidth=2;`;
+          vertex = graph.insertVertex(parent, node.id, '',
+            x - EVENT_SIZE/2, centerY - EVENT_SIZE/2, EVENT_SIZE, EVENT_SIZE, style);
+          break;
+
+        case 'end':
+          style = `shape=ellipse;fillColor=${STYLES.end.fill};strokeColor=${STYLES.end.stroke};strokeWidth=3;`;
+          vertex = graph.insertVertex(parent, node.id, '',
+            x - EVENT_SIZE/2, centerY - EVENT_SIZE/2, EVENT_SIZE, EVENT_SIZE, style);
+          break;
+
+        case 'task':
+          const taskLabel = `<div style="font-size:10px;font-weight:600;color:#1a237e;">${node.num}</div><div style="font-size:9px;line-height:1.1;">${node.name.replace(/\n/g, '<br>')}</div>`;
+          style = `fillColor=${STYLES.task.fill};strokeColor=${STYLES.task.stroke};strokeWidth=1;rounded=1;arcSize=8;html=1;whiteSpace=wrap;`;
+          vertex = graph.insertVertex(parent, node.id, taskLabel,
+            x - NODE_WIDTH/2, centerY - NODE_HEIGHT/2, NODE_WIDTH, NODE_HEIGHT, style);
+          break;
+
+        case 'subprocess':
+          const subLabel = `<div style="font-size:10px;font-weight:600;color:#e65100;">${node.num}</div><div style="font-size:9px;line-height:1.1;">${node.name.replace(/\n/g, '<br>')}</div>`;
+          style = `fillColor=${STYLES.subprocess.fill};strokeColor=${STYLES.subprocess.stroke};strokeWidth=2;rounded=1;arcSize=8;html=1;whiteSpace=wrap;`;
+          vertex = graph.insertVertex(parent, node.id, subLabel,
+            x - NODE_WIDTH/2, centerY - NODE_HEIGHT/2, NODE_WIDTH, NODE_HEIGHT, style);
+          break;
+
+        case 'gateway-xor':
+          style = `shape=rhombus;fillColor=${STYLES.gateway.fill};strokeColor=${STYLES.gateway.stroke};strokeWidth=1;`;
+          vertex = graph.insertVertex(parent, node.id, '<b style="font-size:14px;">X</b>',
+            x - GATEWAY_SIZE/2, centerY - GATEWAY_SIZE/2, GATEWAY_SIZE, GATEWAY_SIZE, style + 'html=1;');
+          break;
+
+        case 'message-catch':
+          style = `shape=ellipse;fillColor=${STYLES.message.fill};strokeColor=${STYLES.message.stroke};strokeWidth=1.5;`;
+          vertex = graph.insertVertex(parent, node.id, '<span style="font-size:11px;">✉</span>',
+            x - EVENT_SIZE/2, centerY - EVENT_SIZE/2, EVENT_SIZE, EVENT_SIZE, style + 'html=1;');
+          break;
+      }
+
+      if (vertex) {
+        vertices[node.id] = vertex;
+      }
+    });
+
+    // Create edges
+    processData.connections.forEach(conn => {
+      const source = vertices[conn.from];
+      const target = vertices[conn.to];
+      if (!source || !target) return;
+
+      let edgeStyle;
+      if (conn.type === 'sequence') {
+        edgeStyle = `strokeColor=${STYLES.edge.sequence};strokeWidth=1.5;endArrow=classic;endSize=6;edgeStyle=orthogonalEdgeStyle;rounded=1;`;
+      } else {
+        edgeStyle = `strokeColor=${STYLES.edge.message};strokeWidth=1.5;dashed=1;dashPattern=5 3;endArrow=classic;endSize=5;edgeStyle=orthogonalEdgeStyle;rounded=1;`;
+      }
+
+      graph.insertEdge(parent, null, '', source, target, edgeStyle);
+    });
+
+  } finally {
+    graph.getModel().endUpdate();
+  }
+
+  // Fit diagram
+  graph.fit();
+  graph.center();
+}
+
+// Initialize
+window.onload = function() {
+  // Small delay to ensure container is ready
+  setTimeout(() => {
+    renderDiagram('graph1', process1);
+    renderDiagram('graph2', process2);
+  }, 100);
+};
+</script>
+
+</body>
+</html>

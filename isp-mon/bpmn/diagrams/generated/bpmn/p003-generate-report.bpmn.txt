@@ -1,0 +1,10 @@
+# Generate Report
+
+BTRC Admin:
+  - Select Parameters
+
+System:
+  - Query Data
+  - Generate Charts
+  - Export Report
+

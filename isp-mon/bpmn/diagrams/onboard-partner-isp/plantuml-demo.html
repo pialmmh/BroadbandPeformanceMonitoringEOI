@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlantUML Activity Diagram - Onboard Partner ISP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .a4-container {
+      width: 700px;
+      margin: 0 auto 20px;
+      background: #fff;
+      padding: 48px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .breadcrumb {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1e3a5f;
+      margin-bottom: 16px;
+    }
+    .diagram-container {
+      text-align: center;
+      background: #fafafa;
+      border: 1px solid #e0e0e0;
+      padding: 10px;
+      min-height: 300px;
+    }
+    .diagram-container img {
+      max-width: 100%;
+      height: auto;
+    }
+    .footer {
+      margin-top: 16px;
+      font-size: 10px;
+      font-style: italic;
+      color: #6b7280;
+      text-align: center;
+    }
+    .page-break {
+      margin: 20px 0;
+      border-top: 2px dashed #999;
+      text-align: center;
+      font-size: 10px;
+      color: #999;
+      padding-top: 5px;
+    }
+    .uml-code {
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 10px;
+      white-space: pre;
+      overflow-x: auto;
+      margin-top: 16px;
+      display: none;
+    }
+    .toggle-code {
+      font-size: 11px;
+      color: #2563eb;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>Onboard Partner ISP</strong></div>
+  <h1>Process: Onboard Partner ISP</h1>
+  <div class="diagram-container">
+    <img id="diagram1" alt="Loading PlantUML diagram...">
+  </div>
+  <div class="footer">Source: BTRC ToR (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+  <div class="toggle-code" onclick="toggleCode('code1')">Show/Hide PlantUML Code</div>
+  <pre id="code1" class="uml-code"></pre>
+</div>
+
+<div class="page-break">--- Page Break ---</div>
+
+<div class="a4-container">
+  <div class="breadcrumb">Processes > Onboard Partner ISP > <strong>1. Register to BTRC Portal</strong></div>
+  <h1>Sub-Process 1: Register to BTRC Portal</h1>
+  <div class="diagram-container">
+    <img id="diagram2" alt="Loading PlantUML diagram...">
+  </div>
+  <div class="footer">Source: BTRC ToR (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+  <div class="toggle-code" onclick="toggleCode('code2')">Show/Hide PlantUML Code</div>
+  <pre id="code2" class="uml-code"></pre>
+</div>
+
+<script>
+// PlantUML diagrams using Activity Diagram syntax with swimlanes
+
+const diagram1_uml = `
+@startuml
+skinparam backgroundColor #FAFAFA
+skinparam shadowing false
+skinparam defaultFontName Inter
+skinparam defaultFontSize 11
+
+skinparam swimlane {
+  BorderColor #666666
+  TitleFontSize 12
+  TitleFontStyle bold
+}
+
+skinparam activity {
+  BackgroundColor #DAE8FC
+  BorderColor #6C8EBF
+  FontSize 10
+}
+
+skinparam activityDiamond {
+  BackgroundColor #FFF2CC
+  BorderColor #D6B656
+}
+
+|ISP|
+start
+:1. Register to\\nBTRC Portal;
+note right: Sub-process
+
+|#f5f5f5|BTRC Admin|
+:1.A Review\\nApplication;
+
+if (Approved?) then (yes)
+  |#f5f5f5|System|
+  :2. Generate\\nCredentials;
+  :3.A Create\\nAPI Keys;
+
+  |ISP|
+  :3. Configure\\nAPI Access;
+  stop
+else (no)
+  |#f5f5f5|BTRC Admin|
+  :Reject\\nApplication;
+  stop
+endif
+
+@enduml
+`;
+
+const diagram2_uml = `
+@startuml
+skinparam backgroundColor #FAFAFA
+skinparam shadowing false
+skinparam defaultFontName Inter
+skinparam defaultFontSize 11
+
+skinparam swimlane {
+  BorderColor #666666
+  TitleFontSize 12
+  TitleFontStyle bold
+}
+
+skinparam activity {
+  BackgroundColor #DAE8FC
+  BorderColor #6C8EBF
+  FontSize 10
+}
+
+|ISP|
+start
+:1.1 Fill Company\\nInformation;
+
+|#f5f5f5|System|
+:1.1.A Validate\\nForm Data;
+
+|ISP|
+:1.2 Upload NID\\n& Documents;
+
+|#f5f5f5|System|
+:1.2.A Verify NID\\nvia API;
+:1.2.B Send OTP;
+
+|ISP|
+:1.3 Enter OTP\\nCode;
+
+|#f5f5f5|System|
+:1.3.A Verify OTP;
+
+|ISP|
+stop
+
+@enduml
+`;
+
+// Encode PlantUML for server
+function encodePlantUML(uml) {
+  // Use PlantUML text encoding
+  const encoded = plantumlEncode(uml);
+  return encoded;
+}
+
+// PlantUML encoding (deflate + base64 variant)
+function plantumlEncode(text) {
+  // Simple encoding using the PlantUML server's default encoding
+  // For complex diagrams, we use the text-based URL encoding
+  const encoded = encodeURIComponent(text)
+    .replace(/%20/g, ' ')
+    .replace(/%0A/g, '~n')
+    .replace(/%3A/g, ':')
+    .replace(/%2F/g, '/')
+    .replace(/%5C/g, '\\\\');
+
+  // Use PlantUML's simpler hex encoding for reliability
+  return textToHex(text);
+}
+
+function textToHex(text) {
+  let hex = '';
+  for (let i = 0; i < text.length; i++) {
+    hex += text.charCodeAt(i).toString(16).padStart(2, '0');
+  }
+  return hex;
+}
+
+// Alternative: Use deflate encoding (PlantUML native)
+function encode64(data) {
+  let r = "";
+  for (let i = 0; i < data.length; i += 3) {
+    if (i + 2 == data.length) {
+      r += append3bytes(data.charCodeAt(i), data.charCodeAt(i + 1), 0);
+    } else if (i + 1 == data.length) {
+      r += append3bytes(data.charCodeAt(i), 0, 0);
+    } else {
+      r += append3bytes(data.charCodeAt(i), data.charCodeAt(i + 1), data.charCodeAt(i + 2));
+    }
+  }
+  return r;
+}
+
+function append3bytes(b1, b2, b3) {
+  let c1 = b1 >> 2;
+  let c2 = ((b1 & 0x3) << 4) | (b2 >> 4);
+  let c3 = ((b2 & 0xF) << 2) | (b3 >> 6);
+  let c4 = b3 & 0x3F;
+  let r = "";
+  r += encode6bit(c1 & 0x3F);
+  r += encode6bit(c2 & 0x3F);
+  r += encode6bit(c3 & 0x3F);
+  r += encode6bit(c4 & 0x3F);
+  return r;
+}
+
+function encode6bit(b) {
+  if (b < 10) return String.fromCharCode(48 + b);
+  b -= 10;
+  if (b < 26) return String.fromCharCode(65 + b);
+  b -= 26;
+  if (b < 26) return String.fromCharCode(97 + b);
+  b -= 26;
+  if (b == 0) return '-';
+  if (b == 1) return '_';
+  return '?';
+}
+
+// Compress using pako (deflate)
+async function compressAndEncode(text) {
+  // Load pako for deflate compression
+  if (typeof pako === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js';
+    document.head.appendChild(script);
+    await new Promise(resolve => script.onload = resolve);
+  }
+
+  const data = new TextEncoder().encode(text);
+  const compressed = pako.deflateRaw(data, { level: 9 });
+  return encode64(String.fromCharCode.apply(null, compressed));
+}
+
+// Render diagrams
+async function renderDiagrams() {
+  try {
+    const encoded1 = await compressAndEncode(diagram1_uml);
+    const encoded2 = await compressAndEncode(diagram2_uml);
+
+    document.getElementById('diagram1').src = `https://www.plantuml.com/plantuml/svg/${encoded1}`;
+    document.getElementById('diagram2').src = `https://www.plantuml.com/plantuml/svg/${encoded2}`;
+
+    document.getElementById('code1').textContent = diagram1_uml;
+    document.getElementById('code2').textContent = diagram2_uml;
+  } catch (e) {
+    console.error('Error encoding:', e);
+    // Fallback: show code only
+    document.getElementById('diagram1').alt = 'Failed to load. See code below.';
+    document.getElementById('diagram2').alt = 'Failed to load. See code below.';
+  }
+}
+
+function toggleCode(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+// Load pako and render
+const pakoScript = document.createElement('script');
+pakoScript.src = 'https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js';
+pakoScript.onload = renderDiagrams;
+document.head.appendChild(pakoScript);
+</script>
+
+</body>
+</html>

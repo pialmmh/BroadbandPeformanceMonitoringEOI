@@ -1,0 +1,13 @@
+# Register to BTRC Portal
+
+ISP:
+  - Fill Company Info
+  - Upload Documents
+  - Enter OTP
+
+System:
+  - Validate Form
+  - Verify NID
+  - Send OTP
+  - Verify OTP
+

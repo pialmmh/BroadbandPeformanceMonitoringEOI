@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JointJS BPMN - Onboard Partner ISP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .a4-container {
+      width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 48px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .breadcrumb {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1e3a5f;
+      margin-bottom: 16px;
+    }
+    #paper {
+      border: 1px solid #e5e7eb;
+      background: #fafafa;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      padding: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .legend-start {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #d1fae5;
+      border: 2px solid #059669;
+    }
+    .legend-end {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fee2e2;
+      border: 3px solid #dc2626;
+    }
+    .legend-task {
+      width: 20px;
+      height: 14px;
+      background: #dbeafe;
+      border: 2px solid #2563eb;
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .legend-gateway {
+      width: 14px;
+      height: 14px;
+      background: #fef3c7;
+      border: 2px solid #d97706;
+      transform: rotate(45deg);
+    }
+    .legend-message {
+      width: 14px;
+      height: 10px;
+      background: #fff;
+      border: 1px solid #475569;
+      position: relative;
+    }
+    .legend-message::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #475569;
+    }
+    .footer {
+      margin-top: 16px;
+      font-size: 10px;
+      font-style: italic;
+      color: #6b7280;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="a4-container">
+  <div class="breadcrumb">Processes &gt; <strong>Onboard Partner ISP</strong></div>
+  <h1>Process: Onboard Partner ISP</h1>
+  <div id="paper"></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon"><div class="legend-start"></div></div>Start</div>
+    <div class="legend-item"><div class="legend-icon"><div class="legend-end"></div></div>End</div>
+    <div class="legend-item"><div class="legend-icon"><div class="legend-task">N</div></div>Task</div>
+    <div class="legend-item"><div class="legend-icon"><div class="legend-gateway"></div></div>XOR Gateway</div>
+    <div class="legend-item"><div class="legend-icon"><div class="legend-message"></div></div>Message Event</div>
+    <div class="legend-item"><span style="border-top: 2px solid #475569; width: 20px; display: inline-block;"></span> Sequence Flow</div>
+    <div class="legend-item"><span style="border-top: 1px dashed #888; width: 20px; display: inline-block;"></span> Message Flow</div>
+  </div>
+
+  <div class="footer">Source: BTRC ToR (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+</div>
+
+<!-- JointJS Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.7.7/joint.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.7.7/joint.min.css">
+
+<script>
+// Process DSL - Same structure as our custom renderer
+const processData = {
+  id: "onboard-partner-isp",
+  name: "Onboard Partner ISP",
+  lanes: [
+    { id: "isp", name: "ISP", y: 0 },
+    { id: "btrc", name: "BTRC Admin", y: 1 },
+    { id: "system", name: "System", y: 2 }
+  ],
+  nodes: [
+    { id: "start", type: "start", lane: "isp", x: 0 },
+    { id: "t1", type: "subprocess", lane: "isp", num: "1", name: "Register to\nBTRC Portal", x: 1 },
+    { id: "recv-creds", type: "message-catch", lane: "isp", x: 2 },
+    { id: "t3", type: "task", lane: "isp", num: "3", name: "Configure\nAPI Access", x: 3 },
+    { id: "end", type: "end", lane: "isp", x: 4 },
+
+    { id: "recv-app", type: "message-catch", lane: "btrc", x: 1 },
+    { id: "t1a", type: "task", lane: "btrc", num: "1.A", name: "Review\nApplication", x: 1.7 },
+    { id: "gw-approve", type: "gateway-xor", lane: "btrc", x: 2.5 },
+
+    { id: "recv-approval", type: "message-catch", lane: "system", x: 2.5 },
+    { id: "t2", type: "task", lane: "system", num: "2", name: "Generate\nCredentials", x: 3.2 },
+    { id: "t3a", type: "task", lane: "system", num: "3.A", name: "Create\nAPI Keys", x: 4 }
+  ],
+  connections: [
+    // Sequence flows
+    { from: "start", to: "t1", type: "sequence" },
+    { from: "t1", to: "recv-creds", type: "sequence" },
+    { from: "recv-creds", to: "t3", type: "sequence" },
+    { from: "t3", to: "end", type: "sequence" },
+    { from: "recv-app", to: "t1a", type: "sequence" },
+    { from: "t1a", to: "gw-approve", type: "sequence" },
+    { from: "recv-approval", to: "t2", type: "sequence" },
+    { from: "t2", to: "t3a", type: "sequence" },
+    // Message flows
+    { from: "t1", to: "recv-app", type: "message" },
+    { from: "gw-approve", to: "recv-approval", type: "message" },
+    { from: "t2", to: "recv-creds", type: "message" }
+  ]
+};
+
+// Layout constants
+const LANE_HEIGHT = 90;
+const LANE_HEADER_WIDTH = 60;
+const CELL_WIDTH = 110;
+const START_X = 80;
+const PADDING_Y = 45;
+
+// Colors from style guide
+const COLORS = {
+  process: { fill: '#dbeafe', stroke: '#2563eb' },
+  decision: { fill: '#fef3c7', stroke: '#d97706' },
+  start: { fill: '#d1fae5', stroke: '#059669' },
+  end: { fill: '#fee2e2', stroke: '#dc2626' },
+  message: { fill: '#ffffff', stroke: '#475569' },
+  lane: { fill: '#f9fafb', stroke: '#e5e7eb', header: '#f3f4f6' },
+  text: { title: '#1e3a5f', body: '#1f2937' },
+  arrow: '#475569'
+};
+
+// Initialize JointJS
+const graph = new joint.dia.Graph();
+const paper = new joint.dia.Paper({
+  el: document.getElementById('paper'),
+  model: graph,
+  width: 604,  // A4 width minus padding
+  height: LANE_HEIGHT * 3 + 20,
+  gridSize: 1,
+  interactive: false,
+  background: { color: '#fafafa' }
+});
+
+// Create lane lookup
+const laneLookup = {};
+processData.lanes.forEach((lane, idx) => {
+  laneLookup[lane.id] = idx;
+});
+
+// Create swim lanes
+function createLanes() {
+  processData.lanes.forEach((lane, idx) => {
+    const y = idx * LANE_HEIGHT + 10;
+
+    // Lane background
+    const laneRect = new joint.shapes.standard.Rectangle({
+      position: { x: LANE_HEADER_WIDTH, y: y },
+      size: { width: 604 - LANE_HEADER_WIDTH - 10, height: LANE_HEIGHT - 4 },
+      attrs: {
+        body: {
+          fill: COLORS.lane.fill,
+          stroke: COLORS.lane.stroke,
+          strokeWidth: 1
+        }
+      }
+    });
+    graph.addCell(laneRect);
+
+    // Lane header
+    const header = new joint.shapes.standard.Rectangle({
+      position: { x: 5, y: y },
+      size: { width: LANE_HEADER_WIDTH - 10, height: LANE_HEIGHT - 4 },
+      attrs: {
+        body: {
+          fill: COLORS.lane.header,
+          stroke: COLORS.lane.stroke,
+          strokeWidth: 1
+        },
+        label: {
+          text: lane.name.replace(' ', '\n'),
+          fontSize: 11,
+          fontWeight: 600,
+          fontFamily: 'Inter, sans-serif',
+          fill: COLORS.text.title
+        }
+      }
+    });
+    graph.addCell(header);
+  });
+}
+
+// Create BPMN elements
+function createElement(node) {
+  const laneIdx = laneLookup[node.lane];
+  const x = START_X + node.x * CELL_WIDTH;
+  const y = laneIdx * LANE_HEIGHT + PADDING_Y;
+
+  let element;
+
+  switch (node.type) {
+    case 'start':
+      element = new joint.shapes.standard.Circle({
+        position: { x: x - 12, y: y - 12 },
+        size: { width: 24, height: 24 },
+        attrs: {
+          body: {
+            fill: COLORS.start.fill,
+            stroke: COLORS.start.stroke,
+            strokeWidth: 2
+          }
+        }
+      });
+      break;
+
+    case 'end':
+      element = new joint.shapes.standard.Circle({
+        position: { x: x - 12, y: y - 12 },
+        size: { width: 24, height: 24 },
+        attrs: {
+          body: {
+            fill: COLORS.end.fill,
+            stroke: COLORS.end.stroke,
+            strokeWidth: 3
+          }
+        }
+      });
+      break;
+
+    case 'task':
+    case 'subprocess':
+      element = new joint.shapes.standard.Rectangle({
+        position: { x: x - 40, y: y - 25 },
+        size: { width: 80, height: 50 },
+        attrs: {
+          body: {
+            fill: COLORS.process.fill,
+            stroke: COLORS.process.stroke,
+            strokeWidth: 2,
+            rx: 0,  // No rounded corners per style guide
+            ry: 0
+          },
+          label: {
+            text: node.num + '\n' + node.name,
+            fontSize: 10,
+            fontFamily: 'Inter, sans-serif',
+            fill: COLORS.text.body,
+            textVerticalAnchor: 'middle'
+          }
+        }
+      });
+      // Add subprocess marker
+      if (node.type === 'subprocess') {
+        element.attr('body/strokeDasharray', '0');
+        // Add [+] marker at bottom
+      }
+      break;
+
+    case 'gateway-xor':
+      element = new joint.shapes.standard.Polygon({
+        position: { x: x - 18, y: y - 18 },
+        size: { width: 36, height: 36 },
+        attrs: {
+          body: {
+            fill: COLORS.decision.fill,
+            stroke: COLORS.decision.stroke,
+            strokeWidth: 2,
+            refPoints: '0,0.5 0.5,0 1,0.5 0.5,1'  // Diamond
+          },
+          label: {
+            text: 'X',
+            fontSize: 14,
+            fontWeight: 'bold',
+            fill: COLORS.decision.stroke
+          }
+        }
+      });
+      break;
+
+    case 'message-catch':
+      // Envelope icon using polygon
+      element = new joint.shapes.standard.Polygon({
+        position: { x: x - 12, y: y - 10 },
+        size: { width: 24, height: 20 },
+        attrs: {
+          body: {
+            fill: COLORS.message.fill,
+            stroke: COLORS.message.stroke,
+            strokeWidth: 1,
+            refPoints: '0,0 1,0 1,1 0,1'  // Rectangle
+          }
+        }
+      });
+      break;
+  }
+
+  if (element) {
+    element.set('nodeId', node.id);
+    graph.addCell(element);
+  }
+
+  return element;
+}
+
+// Create connections using Manhattan router
+function createConnections(elements) {
+  processData.connections.forEach(conn => {
+    const source = elements[conn.from];
+    const target = elements[conn.to];
+
+    if (!source || !target) {
+      console.warn('Missing element for connection:', conn);
+      return;
+    }
+
+    const isMessage = conn.type === 'message';
+
+    const link = new joint.shapes.standard.Link({
+      source: { id: source.id },
+      target: { id: target.id },
+      router: { name: 'manhattan', args: { step: 10, padding: 15 } },
+      connector: { name: 'rounded', args: { radius: 5 } },
+      attrs: {
+        line: {
+          stroke: isMessage ? '#888888' : COLORS.arrow,
+          strokeWidth: isMessage ? 1 : 2,
+          strokeDasharray: isMessage ? '4,3' : 'none',
+          targetMarker: {
+            type: 'path',
+            d: 'M 10 -5 0 0 10 5 Z',
+            fill: isMessage ? '#888888' : COLORS.arrow,
+            stroke: 'none'
+          }
+        }
+      }
+    });
+
+    graph.addCell(link);
+  });
+}
+
+// Build the diagram
+createLanes();
+
+const elements = {};
+processData.nodes.forEach(node => {
+  elements[node.id] = createElement(node);
+});
+
+createConnections(elements);
+
+// Fit to view
+paper.scaleContentToFit({ padding: 10 });
+</script>
+
+</body>
+</html>
