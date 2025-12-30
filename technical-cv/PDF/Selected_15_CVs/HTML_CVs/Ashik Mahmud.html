@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Ashik Mahmud</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 40px;
+            line-height: 1.5;
+            font-size: 11pt;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .main-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        .label {
+            width: 32%;
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+        .colon {
+            width: 3%;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .value {
+            width: 65%;
+        }
+        .section-title {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            padding: 8px;
+            margin-top: 15px;
+            border: 1px solid #000;
+            border-bottom: none;
+        }
+        .section-content {
+            border: 1px solid #000;
+            padding: 12px;
+        }
+        .employment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .employment-table th, .employment-table td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .employment-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .projects-table th, .projects-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .projects-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .lang-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .lang-table th, .lang-table td {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .lang-table th {
+            background-color: #f5f5f5;
+        }
+        .certification {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid #000;
+        }
+        .signature-section {
+            margin-top: 20px;
+        }
+        .checkbox-row {
+            margin: 15px 0;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            font-size: 11pt;
+        }
+    
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm 10mm 12mm;
+            }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .header h2 {
+                font-size: 14pt !important;
+                margin-bottom: 10px !important;
+            }
+            .main-table td {
+                padding: 5px !important;
+                font-size: 9pt !important;
+            }
+            .section-title {
+                padding: 5px 8px !important;
+                margin-top: 8px !important;
+                font-size: 10pt !important;
+                page-break-after: avoid !important;
+            }
+            .section-content {
+                padding: 8px !important;
+                page-break-inside: avoid !important;
+            }
+            .employment-table td {
+                padding: 5px !important;
+            }
+            .certification {
+                margin-top: 15px !important;
+                padding: 10px !important;
+                page-break-inside: avoid !important;
+            }
+            pre {
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+            }
+            ul {
+                margin: 3px 0 !important;
+                padding-left: 20px !important;
+            }
+            li {
+                margin-bottom: 2px !important;
+                font-size: 9pt !important;
+            }
+            table {
+                page-break-inside: avoid !important;
+            }
+            .lang-table th, .lang-table td {
+                padding: 3px 8px !important;
+                font-size: 9pt !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 style="margin:0;">CURRICULUM VITAE</h2>
+    </div>
+
+    <table class="main-table">
+        <tr>
+            <td class="label">1. Proposed Position</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Mobile Application Developer</strong></td>
+        </tr>
+        <tr>
+            <td class="label">2. Name of Staff</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Ashik Mahmud</strong></td>
+        </tr>
+        <tr>
+            <td class="label">3. Date of Birth</td>
+            <td class="colon">:</td>
+            <td class="value">6 September 1998</td>
+        </tr>
+        <tr>
+            <td class="label">4. Nationality</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladeshi</td>
+        </tr>
+        <tr>
+            <td class="label">6. Education</td>
+            <td class="colon">:</td>
+            <td class="value"><pre>B.Sc. in CSE from Chittagong University of Engineering &amp; Technology (2022)
+ H.S.C. from Notre Dame College Mymensingh (2016)
+ S.S.C. from U.C. High School (2014)</pre></td>
+        </tr>
+        <tr>
+            <td class="label">7. Other Training</td>
+            <td class="colon">:</td>
+            <td class="value"><pre>Introduction to Data Science in Python [Coursera]
+Applied Machine Learning in Python [Coursera]
+Neural Networks and Deep Learning [Coursera]
+Using Python to Access Web Data [Coursera]</pre></td>
+        </tr>
+        <tr>
+            <td class="label">8. Languages &amp; Degree of Proficiency</td>
+            <td class="colon">:</td>
+            <td class="value"><table class="lang-table"><tr><th>Language</th><th>Speaking</th><th>Reading</th><th>Writing</th></tr><tr><td>English</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr><tr><td>Bangla</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr></table></td>
+        </tr>
+        <tr>
+            <td class="label">9. Countries of Work Experience</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladesh – 03 years</td>
+        </tr>
+    </table>
+
+    <div class="section-title">10. Employment Records:</div>
+    <div class="section-content">
+        <table class="employment-table">
+<tr><th>Employer / Position</th></tr>
+<tr><td style="padding:10px;">Telcobright Ltd.
+    Software Engineer<br><span style="font-size:10pt;color:#555;">Period: May 2021 Till Date</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+Developed and maintained web applications using modern frameworks and technologies such as JavaScript, React, Spring Boot, and Node.js. This involved both front-end and back-end development, ensuring a seamless integration between user interfaces and server-side logic.
+Collaborated with cross-functional teams including product managers, designers, and QA engineers to define, design, and ship new features. This collaboration ensured optimal performance and user experience by incorporating feedback from various stakeholders and adhering to best practices.
+Implemented RESTful APIs to facilitate communication between different parts of the application and external services. Additionally, integrated third-party services to enhance overall application functionality.
+Optimized code for performance and scalability, conducting thorough code reviews and utilizing profiling tools to identify bottlenecks. These optimizations resulted in significant improvements in system performance and throughput, ensuring the application could handle increased user loads efficiently.
+Utilized version control systems like Git for efficient collaboration and code management. Managed branches, resolved merge conflicts, and ensured code consistency across the development team through regular code reviews and adherence to version control best practices.
+Participated in agile development processes, including sprint planning, daily stand-ups, and retrospectives. Actively contributed to backlog refinement sessions, ensuring user stories were well-defined and achievable within sprint timelines.
+Contributed to the continuous improvement of development processes and tools. Identified areas for process enhancement, introduced new tools and methodologies, and fostered a culture of continuous learning and improvement within the development team, thereby enhancing overall team productivity and code quality.</td></tr>
+</table>
+    </div>
+
+    <div class="certification">
+        <p><strong>Certification:</strong></p>
+        <p>I, the undersigned, certify that (i) I was not a former employee of the client immediately before the submission of this proposal, and, (ii) I have not offered my CV to be proposed by a Firm other than this Consultant for this assignment, and (iii) to the best of my knowledge and belief, this bio data correctly describes myself, my qualifications, and my experience. I understand that any willful misstatement described herein may lead to my disqualification or dismissal, if engaged.</p>
+        <p>I have been employed by <strong>Telcobright Ltd.</strong> as a consultant. Indicate Yes or No in the boxes below:</p>
+
+        <div class="checkbox-row">
+            <span style="margin-right: 30px;">YES &#9744;</span>
+            <span>NO &#9744;</span>
+        </div>
+
+        <div class="signature-section">
+            <p>Signature: _________________________</p>
+            <p>Date of Signing: _____ / _____ / _______ (Day / Month / Year)</p>
+        </div>
+    </div>
+</body>
+</html>

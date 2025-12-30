@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Md. Ariful Haque</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 40px;
+            line-height: 1.5;
+            font-size: 11pt;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .main-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        .label {
+            width: 32%;
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+        .colon {
+            width: 3%;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .value {
+            width: 65%;
+        }
+        .section-title {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            padding: 8px;
+            margin-top: 15px;
+            border: 1px solid #000;
+            border-bottom: none;
+        }
+        .section-content {
+            border: 1px solid #000;
+            padding: 12px;
+        }
+        .employment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .employment-table th, .employment-table td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .employment-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .projects-table th, .projects-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .projects-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .lang-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .lang-table th, .lang-table td {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .lang-table th {
+            background-color: #f5f5f5;
+        }
+        .certification {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid #000;
+        }
+        .signature-section {
+            margin-top: 20px;
+        }
+        .checkbox-row {
+            margin: 15px 0;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            font-size: 11pt;
+        }
+    
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm 10mm 12mm;
+            }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .header h2 {
+                font-size: 14pt !important;
+                margin-bottom: 10px !important;
+            }
+            .main-table td {
+                padding: 5px !important;
+                font-size: 9pt !important;
+            }
+            .section-title {
+                padding: 5px 8px !important;
+                margin-top: 8px !important;
+                font-size: 10pt !important;
+                page-break-after: avoid !important;
+            }
+            .section-content {
+                padding: 8px !important;
+                page-break-inside: avoid !important;
+            }
+            .employment-table td {
+                padding: 5px !important;
+            }
+            .certification {
+                margin-top: 15px !important;
+                padding: 10px !important;
+                page-break-inside: avoid !important;
+            }
+            pre {
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+            }
+            ul {
+                margin: 3px 0 !important;
+                padding-left: 20px !important;
+            }
+            li {
+                margin-bottom: 2px !important;
+                font-size: 9pt !important;
+            }
+            table {
+                page-break-inside: avoid !important;
+            }
+            .lang-table th, .lang-table td {
+                padding: 3px 8px !important;
+                font-size: 9pt !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 style="margin:0;">CURRICULUM VITAE</h2>
+    </div>
+
+    <table class="main-table">
+        <tr>
+            <td class="label">1. Proposed Position</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Solution Architect / System Analyst</strong></td>
+        </tr>
+        <tr>
+            <td class="label">2. Name of Staff</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Md. Ariful Haque</strong></td>
+        </tr>
+        <tr>
+            <td class="label">3. Date of Birth</td>
+            <td class="colon">:</td>
+            <td class="value">-</td>
+        </tr>
+        <tr>
+            <td class="label">4. Nationality</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladeshi</td>
+        </tr>
+        <tr>
+            <td class="label">6. Education</td>
+            <td class="colon">:</td>
+            <td class="value"><pre>Bachelor's Degree in Computer Science / Information Technology
+Higher Secondary Certificate (HSC)
+Secondary School Certificate (SSC)</pre></td>
+        </tr>
+        <tr>
+            <td class="label">7. Professional Certifications</td>
+            <td class="colon">:</td>
+            <td class="value"><pre><strong>VMware Certifications:</strong>
+- VMware vSphere 6.7 Foundations
+- VMware VCP - Data Center Virtualization 2021 (VCP-DCV 2021)
+- VMware VCP - Network Virtualization 2021 (VCP-NV 2021)
+
+<strong>Cisco Certification:</strong>
+- Cisco Certified Network Associate (CCNA)
+
+<strong>Red Hat Certifications:</strong>
+- Red Hat Certified Specialist in Virtualization (RHCSV)
+- Red Hat Certified System Engineer (RHCE)
+- Red Hat Certified System Administrator (RHCSA)
+
+<strong>HPE Certifications:</strong>
+- HPE Sales Certified - Hybrid Cloud Solutions [2020]
+- HPE ATP - Hybrid IT Solutions V2
+- HPE Store Fabric Service and Solution Qualification
+- HPE Integrity Servers Service and Solution Qualification
+- HPE Linux Solution Qualification
+- HPE ProLiant Blade/ML/DL/SL/and Apollo Service and Solution Qualification</pre></td>
+        </tr>
+        <tr>
+            <td class="label">8. Languages &amp; Degree of Proficiency</td>
+            <td class="colon">:</td>
+            <td class="value"><table class="lang-table"><tr><th>Language</th><th>Speaking</th><th>Reading</th><th>Writing</th></tr><tr><td>English</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr><tr><td>Bangla</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr></table></td>
+        </tr>
+        <tr>
+            <td class="label">9. Countries of Work Experience</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladesh - 13 years</td>
+        </tr>
+    </table>
+
+    <div class="section-title">10. Employment Records:</div>
+    <div class="section-content">
+        <table class="employment-table">
+<tr><th>Employer / Position</th></tr>
+<tr><td style="padding:10px;"><strong>CompTech Network System (Pvt) Ltd.</strong><br>
+    Solution Architect / System Analyst<br><span style="font-size:10pt;color:#555;">Period: Present</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+<ul style="margin:5px 0;">
+<li>Designing and implementing enterprise-level cloud infrastructure solutions (IaaS, PaaS, SaaS) for diverse client requirements.</li>
+<li>Leading solution architecture design for complex IT projects, ensuring scalability, security, and performance optimization.</li>
+<li>Implementing and managing VMware virtualization environments including vSphere, NSX for network virtualization, and vSAN for storage.</li>
+<li>Deploying and administering Red Hat Enterprise Linux systems across production environments.</li>
+<li>Configuring and maintaining Cisco network infrastructure including switches, routers, and security appliances.</li>
+<li>Designing hybrid cloud solutions integrating on-premises infrastructure with cloud platforms.</li>
+<li>Managing HPE server infrastructure including ProLiant, Blade systems, and storage solutions.</li>
+<li>Conducting system analysis and requirements gathering for new IT projects.</li>
+<li>Providing technical leadership and mentoring to junior team members.</li>
+<li>Collaborating with stakeholders to develop technology roadmaps and IT strategies.</li>
+<li>Overseeing full life cycle ICT project implementation from inception to deployment.</li>
+<li>Managing multi-site technology environments and ensuring seamless operations across locations.</li>
+</ul>
+</td></tr>
+</table>
+    </div>
+
+    <div class="section-title">11. Subject Matter Specializations:</div>
+    <div class="section-content">
+        <table style="width:100%;">
+            <tr>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Cloud & Virtualization:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>VMware vSphere / ESXi</li>
+                        <li>VMware NSX (Network Virtualization)</li>
+                        <li>VMware vSAN</li>
+                        <li>Cloud Infrastructure (IaaS, PaaS, SaaS)</li>
+                        <li>Hybrid Cloud Solutions</li>
+                    </ul>
+                </td>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Enterprise Systems:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Red Hat Enterprise Linux</li>
+                        <li>HPE ProLiant Servers</li>
+                        <li>HPE Blade Systems</li>
+                        <li>HPE Storage Solutions</li>
+                        <li>Data Center Management</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Networking:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Cisco Networking (CCNA)</li>
+                        <li>Network Architecture Design</li>
+                        <li>Network Security</li>
+                        <li>LAN/WAN Configuration</li>
+                    </ul>
+                </td>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Solution Architecture:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Enterprise Solution Design</li>
+                        <li>System Analysis</li>
+                        <li>IT Strategy & Roadmap</li>
+                        <li>Full Life Cycle Project Management</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-title">12. Professional Summary:</div>
+    <div class="section-content">
+        <p style="margin:5px 0;">An experienced senior level IT consultant with solution architect design, Cloud infrastructure (IaaS, PaaS, SaaS), support, administration and implementation experience of various IT projects. Over 13 years of IT experience with full life cycle ICT project experience. Thrives in a technology focused, multi-site environment. Always meets demands and develops good long-term relationships. Holds multiple industry certifications including VMware VCP, Cisco CCNA, Red Hat RHCE/RHCSA, and HPE certifications demonstrating expertise across virtualization, networking, and enterprise server technologies.</p>
+    </div>
+
+    <div class="certification">
+        <p><strong>Certification:</strong></p>
+        <p>I, the undersigned, certify that (i) I was not a former employee of the client immediately before the submission of this proposal, and, (ii) I have not offered my CV to be proposed by a Firm other than this Consultant for this assignment, and (iii) to the best of my knowledge and belief, this bio data correctly describes myself, my qualifications, and my experience. I understand that any willful misstatement described herein may lead to my disqualification or dismissal, if engaged.</p>
+        <p>I have been employed by <strong>CompTech Network System (Pvt) Ltd.</strong> as a consultant. Indicate Yes or No in the boxes below:</p>
+
+        <div class="checkbox-row">
+            <span style="margin-right: 30px;">YES &#9744;</span>
+            <span>NO &#9744;</span>
+        </div>
+
+        <div class="signature-section">
+            <p>Signature: _________________________</p>
+            <p>Date of Signing: _____ / _____ / _______ (Day / Month / Year)</p>
+        </div>
+    </div>
+</body>
+</html>
+
