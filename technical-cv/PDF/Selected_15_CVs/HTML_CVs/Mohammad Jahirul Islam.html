@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Mohammad Jahirul Islam</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 40px;
+            line-height: 1.5;
+            font-size: 11pt;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .main-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        .label {
+            width: 32%;
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+        .colon {
+            width: 3%;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .value {
+            width: 65%;
+        }
+        .section-title {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            padding: 8px;
+            margin-top: 15px;
+            border: 1px solid #000;
+            border-bottom: none;
+        }
+        .section-content {
+            border: 1px solid #000;
+            padding: 12px;
+        }
+        .employment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .employment-table th, .employment-table td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .employment-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .projects-table th, .projects-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .projects-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .lang-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .lang-table th, .lang-table td {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .lang-table th {
+            background-color: #f5f5f5;
+        }
+        .certification {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid #000;
+        }
+        .signature-section {
+            margin-top: 20px;
+        }
+        .checkbox-row {
+            margin: 15px 0;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            font-size: 11pt;
+        }
+    
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm 10mm 12mm;
+            }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .header h2 {
+                font-size: 14pt !important;
+                margin-bottom: 10px !important;
+            }
+            .main-table td {
+                padding: 5px !important;
+                font-size: 9pt !important;
+            }
+            .section-title {
+                padding: 5px 8px !important;
+                margin-top: 8px !important;
+                font-size: 10pt !important;
+                page-break-after: avoid !important;
+            }
+            .section-content {
+                padding: 8px !important;
+                page-break-inside: avoid !important;
+            }
+            .employment-table td {
+                padding: 5px !important;
+            }
+            .certification {
+                margin-top: 15px !important;
+                padding: 10px !important;
+                page-break-inside: avoid !important;
+            }
+            pre {
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+            }
+            ul {
+                margin: 3px 0 !important;
+                padding-left: 20px !important;
+            }
+            li {
+                margin-bottom: 2px !important;
+                font-size: 9pt !important;
+            }
+            table {
+                page-break-inside: avoid !important;
+            }
+            .lang-table th, .lang-table td {
+                padding: 3px 8px !important;
+                font-size: 9pt !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 style="margin:0;">CURRICULUM VITAE</h2>
+    </div>
+
+    <table class="main-table">
+        <tr>
+            <td class="label">1. Proposed Position</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Network &amp; QoS Expert</strong></td>
+        </tr>
+        <tr>
+            <td class="label">2. Name of Staff</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Mohammad Jahirul Islam</strong></td>
+        </tr>
+        <tr>
+            <td class="label">3. Date of Birth</td>
+            <td class="colon">:</td>
+            <td class="value">-</td>
+        </tr>
+        <tr>
+            <td class="label">4. Nationality</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladeshi</td>
+        </tr>
+        <tr>
+            <td class="label">6. Education</td>
+            <td class="colon">:</td>
+            <td class="value"><pre>Bachelor's Degree in Computer Science / Information Technology
+Higher Secondary Certificate (HSC)
+Secondary School Certificate (SSC)</pre></td>
+        </tr>
+        <tr>
+            <td class="label">7. Professional Certifications</td>
+            <td class="colon">:</td>
+            <td class="value"><pre><strong>Dell Technologies Certifications:</strong>
+- Dell Certified Associate: Converged Systems and Hybrid Cloud
+- Dell Specialist: Implementation Engineer PowerEdge MX Blade Modular
+- Dell Specialist: Implementation Engineer VxRail System
+- Dell Systems Expert Level-1 (DCSE)
+- Dell Compellent Storage and Professional
+- Dell DCSE 2000 Networking Foundations
+
+<strong>VMware Certifications:</strong>
+- VMware Advanced Professional in Data Center Virtualization Design
+- VMware Certified Professional in Data Center Virtualization (6.5.x, 7.x, 8.x)
+- VMware vSAN Specialist
+- VMware Certified Professional in Network Virtualization (2023)
+- VMware HCI Master Specialist
+- VMware Cloud Foundation Specialist
+
+<strong>Microsoft Certifications:</strong>
+- Microsoft Azure Solutions Architect Expert
+- Microsoft Certified Trainer (MCT)
+
+<strong>Red Hat Certifications:</strong>
+- Red Hat Certified System Administrator (RHCSA)
+- Red Hat Certified Engineer (RHCE) - Enterprise Linux 6
+
+<strong>Other Certifications:</strong>
+- HP Expert ONE Certified: Industry Standard Architecture, Server, and Storage Solution
+- Fortinet NSE 1 Network Security Associate
+- ITIL Foundation in IT Service Management
+- PRINCE2 Foundation in Project Management</pre></td>
+        </tr>
+        <tr>
+            <td class="label">8. Languages &amp; Degree of Proficiency</td>
+            <td class="colon">:</td>
+            <td class="value"><table class="lang-table"><tr><th>Language</th><th>Speaking</th><th>Reading</th><th>Writing</th></tr><tr><td>English</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr><tr><td>Bangla</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr></table></td>
+        </tr>
+        <tr>
+            <td class="label">9. Countries of Work Experience</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladesh, Malaysia - 10+ years</td>
+        </tr>
+    </table>
+
+    <div class="section-title">10. Employment Records:</div>
+    <div class="section-content">
+        <table class="employment-table">
+<tr><th>Employer / Position</th></tr>
+<tr><td style="padding:10px;"><strong>CompTech Network System (Pvt) Ltd.</strong><br>
+    Network &amp; QoS Expert<br><span style="font-size:10pt;color:#555;">Period: Present</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+<ul style="margin:5px 0;">
+<li>Designing and implementing enterprise network infrastructure with Quality of Service (QoS) configurations for optimal performance.</li>
+<li>Deploying and managing VMware virtualization environments including vSphere, vCloud, NSX-T, vSAN, and vRealize Automation.</li>
+<li>Implementing Dell Technologies solutions including PowerEdge MX Blade Modular systems and VxRail hyper-converged infrastructure.</li>
+<li>Configuring and managing Dell Compellent storage solutions for enterprise data management.</li>
+<li>Designing and deploying Microsoft Azure cloud solutions as certified Azure Solutions Architect.</li>
+<li>Administering Red Hat Enterprise Linux systems in production environments.</li>
+<li>Implementing network security solutions using Fortinet security appliances.</li>
+<li>Managing HP server and storage infrastructure for enterprise clients.</li>
+<li>Applying ITIL best practices for IT service management and delivery.</li>
+<li>Utilizing PRINCE2 methodology for project management and delivery.</li>
+<li>Conducting technical training sessions as Microsoft Certified Trainer (MCT).</li>
+<li>Providing expert consultation on hybrid cloud and converged infrastructure solutions.</li>
+</ul>
+</td></tr>
+</table>
+    </div>
+
+    <div class="section-title">11. Training &amp; Professional Development:</div>
+    <div class="section-content">
+        <ul style="margin:5px 0;">
+            <li>Dell Certified Systems Expert Level 1 Lab Training - Dell, Penang, Malaysia</li>
+            <li>VMware Hands-on Training: vSphere, vCloud, NSX-T, vSAN, vRealize Automation, AirWatch</li>
+            <li>PMP Project Management Course - Transfotech BD</li>
+            <li>Corporate Leadership Training - BRIDDHI NETWORK</li>
+            <li>Communication Skill Management - 10 Minute School</li>
+        </ul>
+    </div>
+
+    <div class="section-title">12. Awards &amp; Recognition:</div>
+    <div class="section-content">
+        <ul style="margin:5px 0;">
+            <li><strong>Dell Technologies Best Performer Award 2022</strong> - Recognition for outstanding performance and contribution</li>
+            <li><strong>Dell Technologies Best Performer Award 2021</strong> - Recognition for outstanding performance and contribution</li>
+        </ul>
+    </div>
+
+    <div class="section-title">13. Technical Skills:</div>
+    <div class="section-content">
+        <table style="width:100%;">
+            <tr>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Virtualization &amp; Cloud:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>VMware vSphere / ESXi</li>
+                        <li>VMware NSX-T (Network Virtualization)</li>
+                        <li>VMware vSAN / HCI</li>
+                        <li>VMware vRealize Automation</li>
+                        <li>VMware Cloud Foundation</li>
+                        <li>Microsoft Azure</li>
+                    </ul>
+                </td>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Infrastructure &amp; Storage:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Dell PowerEdge MX Blade Systems</li>
+                        <li>Dell VxRail HCI</li>
+                        <li>Dell Compellent Storage</li>
+                        <li>HP Server &amp; Storage Solutions</li>
+                        <li>Converged Infrastructure</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Networking &amp; Security:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Network QoS Configuration</li>
+                        <li>Enterprise Network Design</li>
+                        <li>Fortinet Network Security</li>
+                        <li>Dell Networking</li>
+                    </ul>
+                </td>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Operating Systems &amp; Management:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Red Hat Enterprise Linux</li>
+                        <li>Windows Server</li>
+                        <li>ITIL Service Management</li>
+                        <li>PRINCE2 Project Management</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-title">14. Professional Summary:</div>
+    <div class="section-content">
+        <p style="margin:5px 0;">Highly accomplished Network and QoS Expert with over 10 years of experience in enterprise infrastructure, virtualization, and cloud solutions. Holds advanced certifications from Dell Technologies, VMware, Microsoft, Red Hat, and HP, demonstrating expertise across multiple technology domains. Recognized as Dell Technologies Best Performer for two consecutive years (2021, 2022). Microsoft Certified Trainer (MCT) with experience in delivering technical training. Proficient in designing and implementing hybrid cloud solutions, hyper-converged infrastructure, and network QoS configurations. Strong background in ITIL service management and PRINCE2 project management methodologies.</p>
+    </div>
+
+    <div class="certification">
+        <p><strong>Certification:</strong></p>
+        <p>I, the undersigned, certify that (i) I was not a former employee of the client immediately before the submission of this proposal, and, (ii) I have not offered my CV to be proposed by a Firm other than this Consultant for this assignment, and (iii) to the best of my knowledge and belief, this bio data correctly describes myself, my qualifications, and my experience. I understand that any willful misstatement described herein may lead to my disqualification or dismissal, if engaged.</p>
+        <p>I have been employed by <strong>CompTech Network System (Pvt) Ltd.</strong> as a consultant. Indicate Yes or No in the boxes below:</p>
+
+        <div class="checkbox-row">
+            <span style="margin-right: 30px;">YES &#9744;</span>
+            <span>NO &#9744;</span>
+        </div>
+
+        <div class="signature-section">
+            <p>Signature: _________________________</p>
+            <p>Date of Signing: _____ / _____ / _______ (Day / Month / Year)</p>
+        </div>
+    </div>
+</body>
+</html>
+

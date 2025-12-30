@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Nargish Sultana</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 40px;
+            line-height: 1.5;
+            font-size: 11pt;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .main-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        .label {
+            width: 32%;
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+        .colon {
+            width: 3%;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .value {
+            width: 65%;
+        }
+        .section-title {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            padding: 8px;
+            margin-top: 15px;
+            border: 1px solid #000;
+            border-bottom: none;
+        }
+        .section-content {
+            border: 1px solid #000;
+            padding: 12px;
+        }
+        .employment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .employment-table th, .employment-table td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .employment-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .projects-table th, .projects-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .projects-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .lang-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .lang-table th, .lang-table td {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .lang-table th {
+            background-color: #f5f5f5;
+        }
+        .certification {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid #000;
+        }
+        .signature-section {
+            margin-top: 20px;
+        }
+        .checkbox-row {
+            margin: 15px 0;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            font-size: 11pt;
+        }
+    
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm 10mm 12mm;
+            }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .header h2 {
+                font-size: 14pt !important;
+                margin-bottom: 10px !important;
+            }
+            .main-table td {
+                padding: 5px !important;
+                font-size: 9pt !important;
+            }
+            .section-title {
+                padding: 5px 8px !important;
+                margin-top: 8px !important;
+                font-size: 10pt !important;
+                page-break-after: avoid !important;
+            }
+            .section-content {
+                padding: 8px !important;
+                page-break-inside: avoid !important;
+            }
+            .employment-table td {
+                padding: 5px !important;
+            }
+            .certification {
+                margin-top: 15px !important;
+                padding: 10px !important;
+                page-break-inside: avoid !important;
+            }
+            pre {
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+            }
+            ul {
+                margin: 3px 0 !important;
+                padding-left: 20px !important;
+            }
+            li {
+                margin-bottom: 2px !important;
+                font-size: 9pt !important;
+            }
+            table {
+                page-break-inside: avoid !important;
+            }
+            .lang-table th, .lang-table td {
+                padding: 3px 8px !important;
+                font-size: 9pt !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 style="margin:0;">CURRICULUM VITAE</h2>
+    </div>
+
+    <table class="main-table">
+        <tr>
+            <td class="label">1. Proposed Position</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Business Analyst</strong></td>
+        </tr>
+        <tr>
+            <td class="label">2. Name of Staff</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Nargish Sultana</strong></td>
+        </tr>
+        <tr>
+            <td class="label">3. Date of Birth</td>
+            <td class="colon">:</td>
+            <td class="value">June 20, 1993</td>
+        </tr>
+        <tr>
+            <td class="label">4. Nationality</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladeshi</td>
+        </tr>
+        <tr>
+            <td class="label">6. Education</td>
+            <td class="colon">:</td>
+            <td class="value"><pre>B.Sc. Engineering (Computer Science Engineering) from American International University Bangladesh , 2018
+H.S.C. from Dhaka Board in 2012
+S.S.C. from Dhaka Board in 2010</pre></td>
+        </tr>
+        <tr>
+            <td class="label">8. Languages &amp; Degree of Proficiency</td>
+            <td class="colon">:</td>
+            <td class="value"><table class="lang-table"><tr><th>Language</th><th>Speaking</th><th>Reading</th><th>Writing</th></tr><tr><td>English</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr><tr><td>Bangla (mother tongue)</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr></table></td>
+        </tr>
+        <tr>
+            <td class="label">9. Countries of Work Experience</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladesh – 06 years</td>
+        </tr>
+    </table>
+
+    <div class="section-title">10. Employment Records:</div>
+    <div class="section-content">
+        <table class="employment-table">
+<tr><th>Employer / Position</th></tr>
+<tr><td style="padding:10px;">1. Telcobright Ltd.
+    General Manager<br><span style="font-size:10pt;color:#555;">Period: Feb 2023 Till Date</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+As a Senior Manager serving as a Requirement Analyst and Business Analyst in a software firm, one key responsibility is to oversee and guide the requirements management process while ensuring alignment with business goals and client expectations. 
+This includes leading the requirements elicitation and documentation efforts, ensuring the quality and completeness of requirement specifications, and facilitating effective communication between stakeholders and the development team.
+Additionally, the Senior Manager must mentor junior analysts, coordinate with project managers to align project plans with business objectives, and ensure that all requirements are feasible, prioritized, and traceable throughout the project lifecycle.</td></tr>
+<tr><td style="padding:10px;">2. Nagad Ltd.  
+    Manager<br><span style="font-size:10pt;color:#555;">Period: Dec 2020 Jan 2023</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience: 
+Systematic requirement collection, elicitation, and analysis for preparation of software requirement specification. Visual modelling and documentation of business process and project objectives.
+Identification of business process and features through client meeting and prepare process flow, use case, features and user stories as per BPMN, UML, Agile and other standards.
+Prepare software design artifacts such as- BPMN and UML process diagram, class and sequence diagram and software requirement traceability matrix (RTM).
+Take ownership of feature delivery and follow-up through Software Development Life Cycle (SDLC).
+Other responsibilities included Software testing as Quality Assurance (QA) team member and UI design using mock-up tools for both web and mobile Apps. 
+Notable projects: Bangladesh e-Government ERP by ICT division, Ekpay- Digital Payment System at Access to Information (a2i).</td></tr>
+<tr><td style="padding:10px;">3 Synesis IT Ltd.
+    Business Analyst<br><span style="font-size:10pt;color:#555;">Period: Jan 2018 Dec 2020</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+Systematic requirement collection, elicitation, and analysis for preparation of software requirement specification. Visual modelling and documentation of business process and project objectives.
+Identification of business process and features through client meeting and prepare process flow, use case, features and user stories as per BPMN, UML, Agile and other standards.
+Prepare software design artifacts such as- BPMN and UML process diagram, class and sequence diagram and software requirement traceability matrix (RTM).
+Take ownership of feature delivery and follow-up through Software Development Life Cycle (SDLC).
+Other responsibilities included Software testing as Quality Assurance (QA) team member and UI design using mock-up tools for both web and mobile Apps. 
+Notable projects: Bangladesh e-Government ERP by ICT division, Ekpay- Digital Payment System at Access to Information (a2i).</td></tr>
+</table>
+    </div>
+    <div class="section-title">11. Subject Matter Specializations</div>
+    <div class="section-content">
+        <p style="margin:5px 0 5px 15px;">Project Management</p>
+<p style="margin:5px 0 5px 15px;">PMBOK, Agile (Scrum)</p>
+<p style="margin:5px 0 5px 15px;">Requirement Engineering</p>
+<p style="margin:5px 0 5px 15px;">Business Process Modelling</p>
+<p style="margin:5px 0 5px 15px;">Requirement Collection, Elicitation and Analysis</p>
+<p style="margin:5px 0 5px 15px;">Process and Transformation</p>
+<p style="margin:5px 0 5px 15px;">Documentation- Concept notes and technical write-ups.</p>
+<p style="margin:5px 0 5px 15px;">Excellent Presentation and Inter-Personal Skills</p>
+
+    </div>
+    <div class="section-title">12. Work Undertaken that Best Illustrates Capability to Handle the Tasks Assigned</div>
+    <div class="section-content">
+        <table class="projects-table">
+<tr><th style="width:30%">Project / Role</th><th style="width:70%">Description</th></tr>
+<tr><td style="vertical-align:top;padding:8px;"><strong>Additional Experience/Projects</strong></td><td style="padding:8px;">A2i (Access to Information) Consultant Consultant at Evaluation of 100 digital services on Mujib Year Celebration and Digital Service Design Lab of Women Affairs (DSDL). Concept Writer Prepared Concept Papers of Coordination Unit for COVID-19 and Service Oriented Process (SOP) Design of “Ma Telehealth Call Centre”. Software Shop Limited (SSL Wireless) In a short-term engagement, helped preparing Request for Proposal (RFP) for NBR Bond Management Software, translated functional requirements into process diagrams.</td></tr>
+</table>
+    </div>
+
+    <div class="certification">
+        <p><strong>Certification:</strong></p>
+        <p>I, the undersigned, certify that (i) I was not a former employee of the client immediately before the submission of this proposal, and, (ii) I have not offered my CV to be proposed by a Firm other than this Consultant for this assignment, and (iii) to the best of my knowledge and belief, this bio data correctly describes myself, my qualifications, and my experience. I understand that any willful misstatement described herein may lead to my disqualification or dismissal, if engaged.</p>
+        <p>I have been employed by <strong>Telcobright Ltd.</strong> as a consultant. Indicate Yes or No in the boxes below:</p>
+
+        <div class="checkbox-row">
+            <span style="margin-right: 30px;">YES &#9744;</span>
+            <span>NO &#9744;</span>
+        </div>
+
+        <div class="signature-section">
+            <p>Signature: _________________________</p>
+            <p>Date of Signing: _____ / _____ / _______ (Day / Month / Year)</p>
+        </div>
+    </div>
+</body>
+</html>

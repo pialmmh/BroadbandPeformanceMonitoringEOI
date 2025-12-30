@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Mohammad Arif Iftekhar</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 40px;
+            line-height: 1.5;
+            font-size: 11pt;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .main-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        .label {
+            width: 32%;
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+        .colon {
+            width: 3%;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .value {
+            width: 65%;
+        }
+        .section-title {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            padding: 8px;
+            margin-top: 15px;
+            border: 1px solid #000;
+            border-bottom: none;
+        }
+        .section-content {
+            border: 1px solid #000;
+            padding: 12px;
+        }
+        .employment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .employment-table th, .employment-table td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .employment-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .projects-table th, .projects-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .projects-table th {
+            background-color: #f0f0f0;
+            font-size: 10pt;
+        }
+        .lang-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .lang-table th, .lang-table td {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .lang-table th {
+            background-color: #f5f5f5;
+        }
+        .certification {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px solid #000;
+        }
+        .signature-section {
+            margin-top: 20px;
+        }
+        .checkbox-row {
+            margin: 15px 0;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            font-size: 11pt;
+        }
+    
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm 10mm 12mm;
+            }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .header h2 {
+                font-size: 14pt !important;
+                margin-bottom: 10px !important;
+            }
+            .main-table td {
+                padding: 5px !important;
+                font-size: 9pt !important;
+            }
+            .section-title {
+                padding: 5px 8px !important;
+                margin-top: 8px !important;
+                font-size: 10pt !important;
+                page-break-after: avoid !important;
+            }
+            .section-content {
+                padding: 8px !important;
+                page-break-inside: avoid !important;
+            }
+            .employment-table td {
+                padding: 5px !important;
+            }
+            .certification {
+                margin-top: 15px !important;
+                padding: 10px !important;
+                page-break-inside: avoid !important;
+            }
+            pre {
+                font-size: 9pt !important;
+                line-height: 1.3 !important;
+            }
+            ul {
+                margin: 3px 0 !important;
+                padding-left: 20px !important;
+            }
+            li {
+                margin-bottom: 2px !important;
+                font-size: 9pt !important;
+            }
+            table {
+                page-break-inside: avoid !important;
+            }
+            .lang-table th, .lang-table td {
+                padding: 3px 8px !important;
+                font-size: 9pt !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 style="margin:0;">CURRICULUM VITAE</h2>
+    </div>
+
+    <table class="main-table">
+        <tr>
+            <td class="label">1. Proposed Position</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Senior Software Engineer</strong></td>
+        </tr>
+        <tr>
+            <td class="label">2. Name of Staff</td>
+            <td class="colon">:</td>
+            <td class="value"><strong>Mohammad Arif Iftekhar</strong></td>
+        </tr>
+        <tr>
+            <td class="label">3. Date of Birth</td>
+            <td class="colon">:</td>
+            <td class="value">1st January 1980</td>
+        </tr>
+        <tr>
+            <td class="label">4. Nationality</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladeshi</td>
+        </tr>
+        <tr>
+            <td class="label">6. Education</td>
+            <td class="colon">:</td>
+            <td class="value"><pre>Bachelor's Degree in Computer Science / Information Technology
+Higher Secondary Certificate (HSC)
+Secondary School Certificate (SSC)</pre></td>
+        </tr>
+        <tr>
+            <td class="label">7. Professional Certifications</td>
+            <td class="colon">:</td>
+            <td class="value"><pre><strong>Cloud & Container Certifications:</strong>
+- SUSE Certified Administrator in SUSE RKE2 (Issued: April 28, 2023, CN-1398)
+- COA - Certified OpenStack Administrator (Issued: September 17, 2022, CN-COA-2200-4600-5350)
+- Microsoft Azure Fundamentals: Describe Azure Architecture and Services</pre></td>
+        </tr>
+        <tr>
+            <td class="label">8. Languages &amp; Degree of Proficiency</td>
+            <td class="colon">:</td>
+            <td class="value"><table class="lang-table"><tr><th>Language</th><th>Speaking</th><th>Reading</th><th>Writing</th></tr><tr><td>English</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr><tr><td>Bangla</td><td>Excellent</td><td>Excellent</td><td>Excellent</td></tr></table></td>
+        </tr>
+        <tr>
+            <td class="label">9. Countries of Work Experience</td>
+            <td class="colon">:</td>
+            <td class="value">Bangladesh - 13+ years</td>
+        </tr>
+    </table>
+
+    <div class="section-title">10. Employment Records:</div>
+    <div class="section-content">
+        <table class="employment-table">
+<tr><th>Employer / Position</th></tr>
+<tr><td style="padding:10px;"><strong>CompTech Network System (Pvt) Ltd.</strong><br>
+    Senior DevOps Engineer<br><span style="font-size:10pt;color:#555;">Period: October 2023 - Present</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+<ul style="margin:5px 0;">
+<li>Leading DevOps initiatives and implementing CI/CD pipelines for software development projects.</li>
+<li>Managing containerized applications using Kubernetes (SUSE RKE2) and Docker.</li>
+<li>Administering OpenStack cloud infrastructure for development and production environments.</li>
+<li>Implementing infrastructure as code using modern DevOps tools and practices.</li>
+<li>Collaborating with development teams to streamline deployment processes.</li>
+</ul>
+</td></tr>
+<tr><td style="padding:10px;"><strong>Combosoft</strong><br>
+    Team Leader<br><span style="font-size:10pt;color:#555;">Period: December 2022 - September 2023</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+<ul style="margin:5px 0;">
+<li>Led software and web development team, managing project deliveries and timelines.</li>
+<li>Conducted code reviews to ensure code quality and adherence to best practices.</li>
+<li>Mentored junior developers and facilitated knowledge sharing within the team.</li>
+<li>Coordinated with stakeholders for project requirements and deliverables.</li>
+</ul>
+</td></tr>
+<tr><td style="padding:10px;"><strong>Combosoft</strong><br>
+    Senior Software Engineer<br><span style="font-size:10pt;color:#555;">Period: September 2021 - November 2022</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+<ul style="margin:5px 0;">
+<li>Developed web applications using PHP frameworks (Symfony, Laravel) and Node.js.</li>
+<li>Implemented frontend solutions using Angular.js and Vue.js frameworks.</li>
+<li>Designed and optimized database schemas using MySQL and MongoDB.</li>
+<li>Utilized version control systems (Git, GitLab, Bitbucket) for collaborative development.</li>
+</ul>
+</td></tr>
+<tr><td style="padding:10px;"><strong>Zeteq Systems</strong><br>
+    Senior Software Engineer<br><span style="font-size:10pt;color:#555;">Period: January 2015 - August 2021</span></td></tr>
+<tr><td style="padding:5px 10px 10px 25px;font-style:italic;border-top:none;">Experience:
+<ul style="margin:5px 0;">
+<li>Worked directly with the Chief Software Architect on system design and architecture.</li>
+<li>Designed and implemented database schemas for various enterprise applications.</li>
+<li>Developed full-stack web applications using LAMP stack and modern frameworks.</li>
+<li>Built responsive web applications using HTML5, CSS3, JavaScript, and jQuery.</li>
+<li>Managed software development lifecycle using JIRA for project tracking.</li>
+</ul>
+</td></tr>
+</table>
+    </div>
+
+    <div class="section-title">11. Technical Skills:</div>
+    <div class="section-content">
+        <table style="width:100%;">
+            <tr>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Backend Frameworks:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>PHP: Symfony, Laravel</li>
+                        <li>Node.js: Sails.js</li>
+                        <li>Doctrine ORM</li>
+                        <li>RESTful API Development</li>
+                    </ul>
+                </td>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Frontend Technologies:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>HTML5, CSS3, JavaScript</li>
+                        <li>Angular.js, Vue.js</li>
+                        <li>jQuery, Ajax, JSON</li>
+                        <li>Bootstrap, Responsive Design</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Databases:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>MySQL</li>
+                        <li>MongoDB</li>
+                        <li>Database Design & Optimization</li>
+                    </ul>
+                </td>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>DevOps & Tools:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Kubernetes (SUSE RKE2)</li>
+                        <li>OpenStack Cloud</li>
+                        <li>Docker, CI/CD</li>
+                        <li>LAMP Stack</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Version Control & Project Management:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Git, GitLab, Bitbucket</li>
+                        <li>SVN</li>
+                        <li>JIRA</li>
+                    </ul>
+                </td>
+                <td style="vertical-align:top; width:50%; padding:5px;">
+                    <strong>Template Engines:</strong>
+                    <ul style="margin:5px 0;">
+                        <li>Twig</li>
+                        <li>Smarty</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-title">12. Notable Projects:</div>
+    <div class="section-content">
+        <ul style="margin:5px 0;">
+            <li><strong>SMS-Based Real-Time Election Observation Application</strong> - Developed for The Asia Foundation, enabling real-time election monitoring and reporting via SMS.</li>
+            <li><strong>Multivendor E-commerce Platform</strong> - Experience developing complex multivendor marketplace solutions.</li>
+            <li><strong>Enterprise Web Applications</strong> - Independently handled small to large project development, correction, and modification.</li>
+        </ul>
+    </div>
+
+    <div class="section-title">13. Professional Summary:</div>
+    <div class="section-content">
+        <p style="margin:5px 0;">Highly experienced Senior Software Engineer with over 13 years of expertise in full-stack web development and DevOps practices. Proficient in PHP frameworks (Symfony, Laravel), Node.js, and modern frontend technologies (Angular.js, Vue.js). Certified in SUSE RKE2, OpenStack Administration, and Microsoft Azure. Demonstrated leadership experience as Team Leader with strong code review and team management skills. Notable achievements include developing an SMS-based real-time election observation application for The Asia Foundation. Strong background in database design, responsive web development, and object-oriented programming. Currently serving as Senior DevOps Engineer, implementing containerization and cloud infrastructure solutions.</p>
+    </div>
+
+    <div class="certification">
+        <p><strong>Certification:</strong></p>
+        <p>I, the undersigned, certify that (i) I was not a former employee of the client immediately before the submission of this proposal, and, (ii) I have not offered my CV to be proposed by a Firm other than this Consultant for this assignment, and (iii) to the best of my knowledge and belief, this bio data correctly describes myself, my qualifications, and my experience. I understand that any willful misstatement described herein may lead to my disqualification or dismissal, if engaged.</p>
+        <p>I have been employed by <strong>CompTech Network System (Pvt) Ltd.</strong> as a consultant. Indicate Yes or No in the boxes below:</p>
+
+        <div class="checkbox-row">
+            <span style="margin-right: 30px;">YES &#9744;</span>
+            <span>NO &#9744;</span>
+        </div>
+
+        <div class="signature-section">
+            <p>Signature: _________________________</p>
+            <p>Date of Signing: _____ / _____ / _______ (Day / Month / Year)</p>
+        </div>
+    </div>
+</body>
+</html>
+
