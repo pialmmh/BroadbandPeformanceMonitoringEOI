@@ -38,7 +38,11 @@ import {
   NetworkCheck,
   SupportAgent,
   AppRegistration,
-  CloudUpload
+  CloudUpload,
+  Share,
+  Security,
+  NotificationsActive,
+  Warning
 } from '@mui/icons-material';
 import { RegionFilterProvider } from './contexts/RegionFilterContext';
 import RegionFilter from './components/RegionFilter/RegionFilter';
@@ -46,7 +50,10 @@ import {
   IspRegistration,
   IspDashboard,
   IntegrationProvisioning,
-  SupportTickets
+  SupportTickets,
+  BgpRouting,
+  SecurityCenter,
+  AlertsNotifications
 } from './components/IspPortal';
 import Settings from './components/Settings/Settings';
 
@@ -153,6 +160,10 @@ function NavItem({ to, icon, text, badge }: NavItemProps) {
 function AppContent() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = useState(true);
+  const location = useLocation();
+
+  // Only show region filter on dashboard/home page
+  const showRegionFilter = location.pathname === '/';
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -161,6 +172,9 @@ function AppContent() {
   // Mock data
   const openTickets = 2;
   const pendingDevices = 2;
+  const activeAlerts = 4;
+  const securityThreats = 1;
+  const bgpAlerts = 3;
 
   const drawer = (
     <div>
@@ -185,6 +199,24 @@ function AppContent() {
           icon={<RouterIcon />}
           text="Provisioning"
           badge={pendingDevices > 0 ? pendingDevices : undefined}
+        />
+        <NavItem
+          to="/bgp"
+          icon={<Share />}
+          text="BGP Routing"
+          badge={bgpAlerts > 0 ? bgpAlerts : undefined}
+        />
+        <NavItem
+          to="/security"
+          icon={<Security />}
+          text="Security Center"
+          badge={securityThreats > 0 ? securityThreats : undefined}
+        />
+        <NavItem
+          to="/alerts"
+          icon={<NotificationsActive />}
+          text="Alerts"
+          badge={activeAlerts > 0 ? activeAlerts : undefined}
         />
         <NavItem
           to="/tickets"
@@ -249,17 +281,30 @@ function AppContent() {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, fontSize: '1.1rem', color: 'primary.main' }}>
             BTRC ISP Self-Care Portal
           </Typography>
-          <Tooltip title={rightDrawerOpen ? "Hide Region Filter" : "Show Region Filter"}>
-            <IconButton
-              color="inherit"
-              onClick={() => setRightDrawerOpen(!rightDrawerOpen)}
-              sx={{ display: { xs: 'none', sm: 'inline-flex' }, mr: 1 }}
-            >
-              {rightDrawerOpen ? <FilterListOff /> : <FilterList />}
-            </IconButton>
-          </Tooltip>
+          {securityThreats > 0 && (
+            <Tooltip title="Active Security Threat!">
+              <Chip
+                icon={<Warning />}
+                label="THREAT"
+                color="error"
+                size="small"
+                sx={{ mr: 1, animation: 'pulse 1.5s infinite', '@keyframes pulse': { '0%, 100%': { opacity: 1 }, '50%': { opacity: 0.6 } } }}
+              />
+            </Tooltip>
+          )}
+          {showRegionFilter && (
+            <Tooltip title={rightDrawerOpen ? "Hide Region Filter" : "Show Region Filter"}>
+              <IconButton
+                color="inherit"
+                onClick={() => setRightDrawerOpen(!rightDrawerOpen)}
+                sx={{ display: { xs: 'none', sm: 'inline-flex' }, mr: 1 }}
+              >
+                {rightDrawerOpen ? <FilterListOff /> : <FilterList />}
+              </IconButton>
+            </Tooltip>
+          )}
           <IconButton color="inherit" sx={{ mr: 1 }}>
-            <Badge badgeContent={openTickets} color="error">
+            <Badge badgeContent={activeAlerts} color="error">
               <Notifications />
             </Badge>
           </IconButton>
@@ -317,7 +362,7 @@ function AppContent() {
           p: 2,
           width: {
             xs: '100%',
-            sm: `calc(100% - ${drawerWidth + (rightDrawerOpen ? rightDrawerWidth : 0)}px)`
+            sm: `calc(100% - ${drawerWidth + (showRegionFilter && rightDrawerOpen ? rightDrawerWidth : 0)}px)`
           },
           mt: 8,
           transition: 'all 0.3s ease',
@@ -327,6 +372,9 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<IspDashboard />} />
           <Route path="/provisioning" element={<IntegrationProvisioning />} />
+          <Route path="/bgp" element={<BgpRouting />} />
+          <Route path="/security" element={<SecurityCenter />} />
+          <Route path="/alerts" element={<AlertsNotifications />} />
           <Route path="/tickets" element={<SupportTickets />} />
           <Route path="/documents" element={<IspRegistration />} />
           <Route path="/register" element={<IspRegistration />} />
@@ -334,28 +382,30 @@ function AppContent() {
         </Routes>
       </Box>
 
-      {/* Right Drawer - Region Filter */}
-      <Drawer
-        variant="persistent"
-        anchor="right"
-        open={rightDrawerOpen}
-        sx={{
-          width: rightDrawerOpen ? rightDrawerWidth : 0,
-          flexShrink: 0,
-          display: { xs: 'none', sm: 'block' },
-          '& .MuiDrawer-paper': {
-            width: rightDrawerWidth,
-            boxSizing: 'border-box',
-            mt: 8,
-            height: 'calc(100% - 64px)',
-            borderLeft: '1px solid',
-            borderColor: 'divider',
-            transition: 'all 0.3s ease'
-          },
-        }}
-      >
-        <RegionFilter />
-      </Drawer>
+      {/* Right Drawer - Region Filter (only on Dashboard) */}
+      {showRegionFilter && (
+        <Drawer
+          variant="persistent"
+          anchor="right"
+          open={rightDrawerOpen}
+          sx={{
+            width: rightDrawerOpen ? rightDrawerWidth : 0,
+            flexShrink: 0,
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': {
+              width: rightDrawerWidth,
+              boxSizing: 'border-box',
+              mt: 8,
+              height: 'calc(100% - 64px)',
+              borderLeft: '1px solid',
+              borderColor: 'divider',
+              transition: 'all 0.3s ease'
+            },
+          }}
+        >
+          <RegionFilter />
+        </Drawer>
+      )}
     </Box>
   );
 }

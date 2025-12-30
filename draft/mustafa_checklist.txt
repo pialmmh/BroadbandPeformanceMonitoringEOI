@@ -3,7 +3,7 @@ security
 	hard token
 	HSM
 	DDos detection and protection
-
+	mobile App
 doc
 	overview
 	case study, success stories
@@ -47,6 +47,9 @@ Spamhaus (DNSBL, DROP lists)
 
 Shadowserver Foundation (free for regulators)
 
+mobile app
+	used for ISP security 
+
 CISA / FIRST feeds
 
 Use Cases:
@@ -56,4 +59,33 @@ National botnet monitoring
 ISP security maturity scoring
 
 Early warning dashboards
+
+ISP Self care portal
+	Apply for registrationm, OTP verification, upload ISP license, trade license , NID and other docs
+	BTRC approves regsitration 
+	ISP receives login credentials
+	login first time 
+	change password through received link via email
+	
+	UI/portal section features
+		Integration Provisioning (of individual routers)
+			provision Network equipment router, switch
+			SNMP (covers entering SNMP provisiong info by ISP, shows receiving server side info e..g security token/secret etc. )
+			Netflow (covers entering Netflow provisiong info by ISP, shows receiving server side info e..g security token/secret etc. )
+			//after provisioning ISP equipment will be automatically send data to BTRC server	
+		Support Ticket
+			can raise support ticket to BTRC so that any integration issue/ISP self care portal issues can be raised and resolved through portal 
+	
+
+Vulnerability, Threat and DDoS Attack alert
+
+CAS screenshots
+SMS portal dashboard
+CCL Dashboard
+		dashboard differentiator
+			time window
+			region based
+contention			
+IPSec overlay network
+Shuvom
 

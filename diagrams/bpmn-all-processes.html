@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTRC QoS Platform - Business Process Flows</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-family: 'Inter', 'Arial', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-family); background: #f5f5f5; padding: 20px; }
+
+    .a4-container {
+      width: 700px;
+      margin: 0 auto 30px;
+      background: #fff;
+      padding: 40px 48px;
+      border: 1px solid #ccc;
+      page-break-inside: avoid;
+    }
+    .breadcrumb { margin-bottom: 6px; font-size: 10px; color: #6b7280; }
+    h1 { color: #1f2937; margin-bottom: 4px; font-size: 16px; font-weight: 700; }
+    .process-desc { font-size: 10px; color: #4b5563; margin-bottom: 12px; line-height: 1.4; }
+
+    .bpmn-diagram {
+      position: relative;
+      border: 1px solid #ccc;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .connections-layer {
+      position: absolute;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .swim-lane {
+      display: flex;
+      border-bottom: 1px solid #ccc;
+    }
+    .swim-lane:last-child { border-bottom: none; }
+
+    .lane-header {
+      width: 50px;
+      min-width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 9px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .lane-content {
+      flex: 1;
+      position: relative;
+      background: #fafafa;
+    }
+
+    .bpmn-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    .bpmn-start {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #333333;
+      background: #fff;
+    }
+
+    .bpmn-end {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 4px solid #000000;
+      background: #fff;
+    }
+
+    .bpmn-message-catch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid #666666;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bpmn-message-catch svg {
+      width: 12px;
+      height: 9px;
+    }
+
+    .bpmn-task, .bpmn-subprocess {
+      padding: 4px 5px;
+      width: 64px;
+      text-align: center;
+      border: 2px solid;
+      border-radius: 3px;
+    }
+    .bpmn-task {
+      background: #f0f0f0;
+      border-color: #666666;
+    }
+    .bpmn-subprocess {
+      background: #e0e0e0;
+      border-color: #333333;
+    }
+    .task-num {
+      font-size: 10px;
+      font-weight: 700;
+      color: #333333;
+      display: block;
+    }
+    .task-name {
+      font-size: 8px;
+      color: #333333;
+      line-height: 1.1;
+    }
+
+    .bpmn-gateway {
+      width: 20px;
+      height: 20px;
+      background: #f5f5f5;
+      border: 2px solid #666666;
+      transform: translate(-50%, -50%) rotate(45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bpmn-gateway span {
+      transform: rotate(-45deg);
+      font-size: 9px;
+      font-weight: bold;
+      color: #666666;
+    }
+
+    .legend {
+      padding: 6px 8px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 8px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 3px; }
+    .legend-icon { width: 12px; height: 12px; }
+    .legend-start { border-radius: 50%; border: 2px solid #333; background: #fff; }
+    .legend-end { border-radius: 50%; border: 3px solid #000; background: #fff; }
+    .legend-task { background: #f0f0f0; border: 1px solid #666; font-size: 6px; display: flex; align-items: center; justify-content: center; border-radius: 2px; }
+    .legend-subprocess { background: #e0e0e0; border: 1px solid #333; font-size: 6px; display: flex; align-items: center; justify-content: center; border-radius: 2px; }
+    .legend-msg { border-radius: 50%; border: 1px solid #666; background: #fff; font-size: 7px; display: flex; align-items: center; justify-content: center; }
+    .legend-gw { background: #f5f5f5; border: 1px solid #666; transform: rotate(45deg); width: 9px; height: 9px; }
+    .legend-line { width: 18px; height: 2px; background: #333; }
+    .legend-line-dash { width: 18px; border-top: 1px dashed #666; }
+
+    .footer { margin-top: 6px; font-size: 8px; font-style: italic; color: #6b7280; text-align: center; }
+
+    .page-title {
+      width: 700px;
+      margin: 0 auto 20px;
+      text-align: center;
+    }
+    .page-title h1 { font-size: 20px; color: #1f2937; margin-bottom: 4px; }
+    .page-title p { font-size: 11px; color: #4b5563; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .a4-container { border: none; margin: 0 auto 20px; page-break-inside: avoid; }
+      .page-title { page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>BTRC QoS Monitoring Platform</h1>
+  <p>Key Business Process Flows (BPMN)</p>
+</div>
+
+<!-- Process 1: ISP Onboarding -->
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>ISP Onboarding</strong></div>
+  <h1>Process 1: ISP Onboarding</h1>
+  <div class="process-desc">New ISP registration, credential generation, and API access configuration for QoS platform integration.</div>
+  <div id="diagram1" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-subprocess">S</div>Sub-Process</div>
+    <div class="legend-item"><div class="legend-icon legend-msg">&#9993;</div>Message</div>
+    <div class="legend-item"><div class="legend-gw"></div>Gateway</div>
+    <div class="legend-item"><div class="legend-line"></div>Sequence</div>
+    <div class="legend-item"><div class="legend-line-dash"></div>Message Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR Section 3.2 (EOI: 14.32.0000.000.400.07.0021.25.1685)</div>
+</div>
+
+<!-- Process 2: Data Acquisition -->
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>Data Acquisition</strong></div>
+  <h1>Process 2: Data Acquisition (SNMP/API)</h1>
+  <div class="process-desc">Automated collection of operational metrics from ISP network devices via SNMP agents and REST API submissions.</div>
+  <div id="diagram2" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-msg">&#9993;</div>Message</div>
+    <div class="legend-item"><div class="legend-gw"></div>Gateway</div>
+    <div class="legend-item"><div class="legend-line"></div>Sequence</div>
+    <div class="legend-item"><div class="legend-line-dash"></div>Message Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR Section 3.2.1-3.2.2 (Data Acquisition Layer)</div>
+</div>
+
+<!-- Process 3: QoS Alert Generation -->
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>QoS Alert Generation</strong></div>
+  <h1>Process 3: QoS Alert Generation</h1>
+  <div class="process-desc">Real-time threshold monitoring, anomaly detection, alert classification, and notification to BTRC operators.</div>
+  <div id="diagram3" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-msg">&#9993;</div>Message</div>
+    <div class="legend-item"><div class="legend-gw"></div>Gateway</div>
+    <div class="legend-item"><div class="legend-line"></div>Sequence</div>
+  </div>
+  <div class="footer">Source: BTRC ToR Section 3.4 (QoS Monitoring Module)</div>
+</div>
+
+<!-- Process 4: ISP Data Submission -->
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>ISP Data Submission</strong></div>
+  <h1>Process 4: ISP Data Submission</h1>
+  <div class="process-desc">ISP submits operational, subscriber, and revenue data via selfcare portal. System validates and processes submission.</div>
+  <div id="diagram4" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-msg">&#9993;</div>Message</div>
+    <div class="legend-item"><div class="legend-gw"></div>Gateway</div>
+    <div class="legend-item"><div class="legend-line"></div>Sequence</div>
+    <div class="legend-item"><div class="legend-line-dash"></div>Message Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR Section 3.2.2 (API-Based Data Collection)</div>
+</div>
+
+<!-- Process 5: Incident Reporting -->
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>Incident Reporting</strong></div>
+  <h1>Process 5: Incident Reporting</h1>
+  <div class="process-desc">ISP reports network outage or degradation. BTRC acknowledges and tracks resolution until closure.</div>
+  <div id="diagram5" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-msg">&#9993;</div>Message</div>
+    <div class="legend-item"><div class="legend-line"></div>Sequence</div>
+    <div class="legend-item"><div class="legend-line-dash"></div>Message Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR Section 3.3 (Operational Data Module)</div>
+</div>
+
+<!-- Process 6: End-User Speed Test -->
+<div class="a4-container">
+  <div class="breadcrumb">Processes > <strong>End-User Speed Test</strong></div>
+  <h1>Process 6: End-User Speed Test</h1>
+  <div class="process-desc">User performs speed test via mobile app. Results are collected with location and ISP info for crowd-sourced QoS analysis.</div>
+  <div id="diagram6" class="bpmn-diagram"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-icon legend-start"></div>Start</div>
+    <div class="legend-item"><div class="legend-icon legend-end"></div>End</div>
+    <div class="legend-item"><div class="legend-icon legend-task">N</div>Task</div>
+    <div class="legend-item"><div class="legend-icon legend-msg">&#9993;</div>Message</div>
+    <div class="legend-item"><div class="legend-line"></div>Sequence</div>
+    <div class="legend-item"><div class="legend-line-dash"></div>Message Flow</div>
+  </div>
+  <div class="footer">Source: BTRC ToR Section 3.6 (User-Facing Application)</div>
+</div>
+
+<script>
+// Grayscale theme colors
+const THEME = {
+  colors: {
+    startEvent: { border: '#333333', fill: '#ffffff' },
+    endEvent: { border: '#000000', fill: '#ffffff' },
+    messageEvent: { border: '#666666', fill: '#ffffff', icon: '#666666' },
+    task: { border: '#666666', fill: '#f0f0f0', text: '#333333' },
+    subprocess: { border: '#333333', fill: '#e0e0e0', text: '#333333' },
+    gateway: { border: '#666666', fill: '#f5f5f5', text: '#666666' },
+    laneHeaders: [
+      { bg: '#1f2937', text: '#ffffff' },
+      { bg: '#4b5563', text: '#ffffff' },
+      { bg: '#6b7280', text: '#ffffff' }
+    ],
+    laneContent: { bg: '#fafafa', border: '#cccccc' },
+    sequenceFlow: { stroke: '#333333', width: 1.5 },
+    messageFlow: { stroke: '#666666', width: 1, dash: '4,2' }
+  },
+  layout: {
+    pageWidth: 604,
+    laneHeaderWidth: 50,
+    laneHeight: 60
+  }
+};
+
+const PAGE_WIDTH = THEME.layout.pageWidth;
+const LANE_HEADER_W = THEME.layout.laneHeaderWidth;
+const LANE_CONTENT_W = PAGE_WIDTH - LANE_HEADER_W;
+const LANE_HEIGHT = THEME.layout.laneHeight;
+
+// Process Data Definitions
+const processes = {
+  // Process 1: ISP Onboarding
+  process1: {
+    lanes: [
+      { id: 'isp', name: 'ISP' },
+      { id: 'btrc', name: 'BTRC<br>Admin' },
+      { id: 'system', name: 'System' }
+    ],
+    nodes: [
+      { id: 'start', type: 'start', lane: 'isp', x: 5 },
+      { id: 't1', type: 'subprocess', lane: 'isp', num: '1', name: 'Submit<br>Application', x: 18 },
+      { id: 'recv-creds', type: 'message-catch', lane: 'isp', x: 62 },
+      { id: 't4', type: 'task', lane: 'isp', num: '4', name: 'Configure<br>API Access', x: 78 },
+      { id: 'end', type: 'end', lane: 'isp', x: 95 },
+      { id: 'recv-app', type: 'message-catch', lane: 'btrc', x: 18 },
+      { id: 't2', type: 'task', lane: 'btrc', num: '2', name: 'Review &<br>Approve', x: 35 },
+      { id: 'gw1', type: 'gateway-xor', lane: 'btrc', x: 50 },
+      { id: 'recv-appr', type: 'message-catch', lane: 'system', x: 50 },
+      { id: 't3', type: 'task', lane: 'system', num: '3', name: 'Generate<br>Credentials', x: 65 }
+    ],
+    connections: [
+      { from: 'start', to: 't1', type: 'sequence' },
+      { from: 't1', to: 'recv-creds', type: 'sequence' },
+      { from: 'recv-creds', to: 't4', type: 'sequence' },
+      { from: 't4', to: 'end', type: 'sequence' },
+      { from: 'recv-app', to: 't2', type: 'sequence' },
+      { from: 't2', to: 'gw1', type: 'sequence' },
+      { from: 'recv-appr', to: 't3', type: 'sequence' },
+      { from: 't1', to: 'recv-app', type: 'message' },
+      { from: 'gw1', to: 'recv-appr', type: 'message' },
+      { from: 't3', to: 'recv-creds', type: 'message' }
+    ]
+  },
+
+  // Process 2: Data Acquisition
+  process2: {
+    lanes: [
+      { id: 'isp', name: 'ISP<br>Network' },
+      { id: 'agent', name: 'SNMP<br>Agent' },
+      { id: 'platform', name: 'QoS<br>Platform' }
+    ],
+    nodes: [
+      { id: 'start', type: 'start', lane: 'agent', x: 5 },
+      { id: 't1', type: 'task', lane: 'agent', num: '1', name: 'Poll<br>Devices', x: 18 },
+      { id: 't2', type: 'task', lane: 'agent', num: '2', name: 'Collect<br>Metrics', x: 35 },
+      { id: 't3', type: 'task', lane: 'agent', num: '3', name: 'Encrypt &<br>Send', x: 52 },
+      { id: 'recv-snmp', type: 'message-catch', lane: 'isp', x: 18 },
+      { id: 'resp-snmp', type: 'message-catch', lane: 'agent', x: 26 },
+      { id: 'recv-data', type: 'message-catch', lane: 'platform', x: 52 },
+      { id: 't4', type: 'task', lane: 'platform', num: '4', name: 'Validate<br>Data', x: 65 },
+      { id: 't5', type: 'task', lane: 'platform', num: '5', name: 'Store in<br>TimeSeries', x: 82 },
+      { id: 'end', type: 'end', lane: 'platform', x: 95 }
+    ],
+    connections: [
+      { from: 'start', to: 't1', type: 'sequence' },
+      { from: 't1', to: 't2', type: 'sequence' },
+      { from: 't2', to: 't3', type: 'sequence' },
+      { from: 'recv-data', to: 't4', type: 'sequence' },
+      { from: 't4', to: 't5', type: 'sequence' },
+      { from: 't5', to: 'end', type: 'sequence' },
+      { from: 't1', to: 'recv-snmp', type: 'message' },
+      { from: 'recv-snmp', to: 'resp-snmp', type: 'message' },
+      { from: 't3', to: 'recv-data', type: 'message' }
+    ]
+  },
+
+  // Process 3: QoS Alert Generation
+  process3: {
+    lanes: [
+      { id: 'stream', name: 'Stream<br>Processor' },
+      { id: 'alert', name: 'Alert<br>Engine' },
+      { id: 'operator', name: 'BTRC<br>Operator' }
+    ],
+    nodes: [
+      { id: 'start', type: 'start', lane: 'stream', x: 5 },
+      { id: 't1', type: 'task', lane: 'stream', num: '1', name: 'Compute<br>KPIs', x: 18 },
+      { id: 't2', type: 'task', lane: 'stream', num: '2', name: 'Check<br>Thresholds', x: 35 },
+      { id: 'gw1', type: 'gateway-xor', lane: 'stream', x: 50 },
+      { id: 'end1', type: 'end', lane: 'stream', x: 95 },
+      { id: 'recv-breach', type: 'message-catch', lane: 'alert', x: 50 },
+      { id: 't3', type: 'task', lane: 'alert', num: '3', name: 'Classify<br>Severity', x: 62 },
+      { id: 't4', type: 'task', lane: 'alert', num: '4', name: 'Generate<br>Alert', x: 78 },
+      { id: 'recv-alert', type: 'message-catch', lane: 'operator', x: 78 },
+      { id: 't5', type: 'task', lane: 'operator', num: '5', name: 'Review &<br>Act', x: 92 }
+    ],
+    connections: [
+      { from: 'start', to: 't1', type: 'sequence' },
+      { from: 't1', to: 't2', type: 'sequence' },
+      { from: 't2', to: 'gw1', type: 'sequence' },
+      { from: 'gw1', to: 'end1', type: 'sequence' },
+      { from: 'recv-breach', to: 't3', type: 'sequence' },
+      { from: 't3', to: 't4', type: 'sequence' },
+      { from: 'recv-alert', to: 't5', type: 'sequence' },
+      { from: 'gw1', to: 'recv-breach', type: 'message' },
+      { from: 't4', to: 'recv-alert', type: 'message' }
+    ]
+  },
+
+  // Process 4: ISP Data Submission
+  process4: {
+    lanes: [
+      { id: 'isp', name: 'ISP<br>Portal' },
+      { id: 'system', name: 'QoS<br>Platform' }
+    ],
+    nodes: [
+      { id: 'start', type: 'start', lane: 'isp', x: 5 },
+      { id: 't1', type: 'task', lane: 'isp', num: '1', name: 'Login to<br>Portal', x: 15 },
+      { id: 't2', type: 'task', lane: 'isp', num: '2', name: 'Select<br>Data Type', x: 28 },
+      { id: 't3', type: 'task', lane: 'isp', num: '3', name: 'Enter/<br>Upload Data', x: 42 },
+      { id: 'recv-conf', type: 'message-catch', lane: 'isp', x: 72 },
+      { id: 'end', type: 'end', lane: 'isp', x: 95 },
+      { id: 'recv-data', type: 'message-catch', lane: 'system', x: 42 },
+      { id: 't4', type: 'task', lane: 'system', num: '4', name: 'Validate<br>Format', x: 55 },
+      { id: 'gw1', type: 'gateway-xor', lane: 'system', x: 68 },
+      { id: 't5', type: 'task', lane: 'system', num: '5', name: 'Store &<br>Process', x: 82 }
+    ],
+    connections: [
+      { from: 'start', to: 't1', type: 'sequence' },
+      { from: 't1', to: 't2', type: 'sequence' },
+      { from: 't2', to: 't3', type: 'sequence' },
+      { from: 't3', to: 'recv-conf', type: 'sequence' },
+      { from: 'recv-conf', to: 'end', type: 'sequence' },
+      { from: 'recv-data', to: 't4', type: 'sequence' },
+      { from: 't4', to: 'gw1', type: 'sequence' },
+      { from: 'gw1', to: 't5', type: 'sequence' },
+      { from: 't3', to: 'recv-data', type: 'message' },
+      { from: 'gw1', to: 'recv-conf', type: 'message' }
+    ]
+  },
+
+  // Process 5: Incident Reporting
+  process5: {
+    lanes: [
+      { id: 'isp', name: 'ISP' },
+      { id: 'btrc', name: 'BTRC<br>System' }
+    ],
+    nodes: [
+      { id: 'start', type: 'start', lane: 'isp', x: 5 },
+      { id: 't1', type: 'task', lane: 'isp', num: '1', name: 'Report<br>Incident', x: 18 },
+      { id: 'recv-ack', type: 'message-catch', lane: 'isp', x: 45 },
+      { id: 't4', type: 'task', lane: 'isp', num: '4', name: 'Update<br>Status', x: 62 },
+      { id: 't5', type: 'task', lane: 'isp', num: '5', name: 'Close<br>Incident', x: 82 },
+      { id: 'end', type: 'end', lane: 'isp', x: 95 },
+      { id: 'recv-inc', type: 'message-catch', lane: 'btrc', x: 18 },
+      { id: 't2', type: 'task', lane: 'btrc', num: '2', name: 'Log &<br>Acknowledge', x: 32 },
+      { id: 't3', type: 'task', lane: 'btrc', num: '3', name: 'Track<br>Resolution', x: 50 },
+      { id: 'recv-close', type: 'message-catch', lane: 'btrc', x: 82 }
+    ],
+    connections: [
+      { from: 'start', to: 't1', type: 'sequence' },
+      { from: 't1', to: 'recv-ack', type: 'sequence' },
+      { from: 'recv-ack', to: 't4', type: 'sequence' },
+      { from: 't4', to: 't5', type: 'sequence' },
+      { from: 't5', to: 'end', type: 'sequence' },
+      { from: 'recv-inc', to: 't2', type: 'sequence' },
+      { from: 't2', to: 't3', type: 'sequence' },
+      { from: 't1', to: 'recv-inc', type: 'message' },
+      { from: 't2', to: 'recv-ack', type: 'message' },
+      { from: 't5', to: 'recv-close', type: 'message' }
+    ]
+  },
+
+  // Process 6: End-User Speed Test
+  process6: {
+    lanes: [
+      { id: 'user', name: 'End<br>User' },
+      { id: 'app', name: 'Mobile<br>App' },
+      { id: 'platform', name: 'QoS<br>Platform' }
+    ],
+    nodes: [
+      { id: 'start', type: 'start', lane: 'user', x: 5 },
+      { id: 't1', type: 'task', lane: 'user', num: '1', name: 'Open<br>App', x: 15 },
+      { id: 't2', type: 'task', lane: 'user', num: '2', name: 'Start<br>Test', x: 28 },
+      { id: 'recv-result', type: 'message-catch', lane: 'user', x: 72 },
+      { id: 'end', type: 'end', lane: 'user', x: 95 },
+      { id: 'recv-start', type: 'message-catch', lane: 'app', x: 28 },
+      { id: 't3', type: 'task', lane: 'app', num: '3', name: 'Run<br>Tests', x: 42 },
+      { id: 't4', type: 'task', lane: 'app', num: '4', name: 'Collect<br>Location', x: 55 },
+      { id: 't5', type: 'task', lane: 'app', num: '5', name: 'Send<br>Results', x: 68 },
+      { id: 'recv-data', type: 'message-catch', lane: 'platform', x: 68 },
+      { id: 't6', type: 'task', lane: 'platform', num: '6', name: 'Store &<br>Aggregate', x: 85 }
+    ],
+    connections: [
+      { from: 'start', to: 't1', type: 'sequence' },
+      { from: 't1', to: 't2', type: 'sequence' },
+      { from: 't2', to: 'recv-result', type: 'sequence' },
+      { from: 'recv-result', to: 'end', type: 'sequence' },
+      { from: 'recv-start', to: 't3', type: 'sequence' },
+      { from: 't3', to: 't4', type: 'sequence' },
+      { from: 't4', to: 't5', type: 'sequence' },
+      { from: 'recv-data', to: 't6', type: 'sequence' },
+      { from: 't2', to: 'recv-start', type: 'message' },
+      { from: 't5', to: 'recv-data', type: 'message' },
+      { from: 't5', to: 'recv-result', type: 'message' }
+    ]
+  }
+};
+
+// BPMN Renderer
+class BpmnRenderer {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.positions = {};
+  }
+
+  render(data) {
+    const { lanes, nodes, connections } = data;
+    const totalHeight = lanes.length * LANE_HEIGHT;
+
+    let html = `<svg class="connections-layer" width="${PAGE_WIDTH}" height="${totalHeight}"></svg>`;
+
+    lanes.forEach((lane, idx) => {
+      const headerStyle = THEME.colors.laneHeaders[idx % THEME.colors.laneHeaders.length];
+      html += `
+        <div class="swim-lane" style="height:${LANE_HEIGHT}px">
+          <div class="lane-header" style="background:${headerStyle.bg};color:${headerStyle.text}">${lane.name}</div>
+          <div class="lane-content"></div>
+        </div>`;
+    });
+
+    this.container.innerHTML = html;
+    this.container.style.width = PAGE_WIDTH + 'px';
+
+    const laneContents = this.container.querySelectorAll('.lane-content');
+    nodes.forEach(node => {
+      const laneIdx = lanes.findIndex(l => l.id === node.lane);
+      if (laneIdx < 0) return;
+      const laneContent = laneContents[laneIdx];
+      const el = this.createNodeElement(node);
+      laneContent.appendChild(el);
+
+      const xPx = (node.x / 100) * LANE_CONTENT_W;
+      this.positions[node.id] = {
+        x: LANE_HEADER_W + xPx,
+        y: laneIdx * LANE_HEIGHT + LANE_HEIGHT / 2,
+        laneIdx,
+        el
+      };
+    });
+
+    requestAnimationFrame(() => this.drawConnections(connections));
+  }
+
+  createNodeElement(node) {
+    const el = document.createElement('div');
+    el.className = 'bpmn-node';
+    el.style.left = node.x + '%';
+    el.style.top = '50%';
+
+    switch (node.type) {
+      case 'start':
+        el.classList.add('bpmn-start');
+        break;
+      case 'end':
+        el.classList.add('bpmn-end');
+        break;
+      case 'task':
+        el.classList.add('bpmn-task');
+        el.innerHTML = `<span class="task-num">${node.num}</span><span class="task-name">${node.name}</span>`;
+        break;
+      case 'subprocess':
+        el.classList.add('bpmn-subprocess');
+        el.innerHTML = `<span class="task-num">${node.num}</span><span class="task-name">${node.name}</span>`;
+        break;
+      case 'message-catch':
+        el.classList.add('bpmn-message-catch');
+        el.innerHTML = `<svg viewBox="0 0 24 18" fill="none" stroke="#666" stroke-width="2">
+          <rect x="1" y="1" width="22" height="16" rx="1"/>
+          <path d="M1 1 L12 10 L23 1"/>
+        </svg>`;
+        break;
+      case 'gateway-xor':
+        el.classList.add('bpmn-gateway');
+        el.innerHTML = `<span>X</span>`;
+        break;
+    }
+    return el;
+  }
+
+  drawConnections(connections) {
+    const svg = this.container.querySelector('.connections-layer');
+    const seqColor = THEME.colors.sequenceFlow.stroke;
+    const seqWidth = THEME.colors.sequenceFlow.width;
+    const msgColor = THEME.colors.messageFlow.stroke;
+    const msgWidth = THEME.colors.messageFlow.width;
+    const msgDash = THEME.colors.messageFlow.dash;
+
+    let content = `
+      <defs>
+        <marker id="arr-s" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0,8 3,0 6" fill="${seqColor}"/>
+        </marker>
+        <marker id="arr-m" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+          <polygon points="0 0,6 2.5,0 5" fill="${msgColor}"/>
+        </marker>
+      </defs>`;
+
+    connections.forEach(c => {
+      const from = this.positions[c.from];
+      const to = this.positions[c.to];
+      if (!from || !to) return;
+
+      const fromW = from.el.offsetWidth / 2;
+      const fromH = from.el.offsetHeight / 2;
+      const toW = to.el.offsetWidth / 2;
+      const toH = to.el.offsetHeight / 2;
+
+      if (c.type === 'sequence') {
+        const x1 = from.x + fromW;
+        const y1 = from.y;
+        const x2 = to.x - toW;
+        const y2 = to.y;
+
+        let path;
+        if (Math.abs(y1 - y2) < 2) {
+          path = `M${x1},${y1} L${x2},${y2}`;
+        } else {
+          const midX = x1 + 10;
+          path = `M${x1},${y1} H${midX} V${y2} H${x2}`;
+        }
+        content += `<path d="${path}" stroke="${seqColor}" stroke-width="${seqWidth}" fill="none" marker-end="url(#arr-s)"/>`;
+      } else {
+        const goDown = from.laneIdx < to.laneIdx;
+        const x1 = from.x;
+        const y1 = goDown ? from.y + fromH : from.y - fromH;
+        const x2 = to.x;
+        const y2 = goDown ? to.y - toH : to.y + toH;
+
+        let path;
+        if (Math.abs(x1 - x2) < 3) {
+          path = `M${x1},${y1} V${y2}`;
+        } else {
+          const midY = (y1 + y2) / 2;
+          path = `M${x1},${y1} V${midY} H${x2} V${y2}`;
+        }
+        content += `<path d="${path}" stroke="${msgColor}" stroke-width="${msgWidth}" stroke-dasharray="${msgDash}" fill="none" marker-end="url(#arr-m)"/>`;
+      }
+    });
+
+    svg.innerHTML = content;
+  }
+}
+
+// Render all diagrams
+document.addEventListener('DOMContentLoaded', () => {
+  new BpmnRenderer('diagram1').render(processes.process1);
+  new BpmnRenderer('diagram2').render(processes.process2);
+  new BpmnRenderer('diagram3').render(processes.process3);
+  new BpmnRenderer('diagram4').render(processes.process4);
+  new BpmnRenderer('diagram5').render(processes.process5);
+  new BpmnRenderer('diagram6').render(processes.process6);
+});
+</script>
+
+</body>
+</html>

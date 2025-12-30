@@ -1,0 +1,140 @@
+{
+  "screenshots": [
+    {
+      "filename": "dashboard.png",
+      "title": "ISP Dashboard - Home Page"
+    },
+    {
+      "filename": "provisioning.png",
+      "title": "Integration & Provisioning"
+    },
+    {
+      "filename": "provisioning_tab_1_snmp-configuration.png",
+      "title": "Integration & Provisioning - SNMP Configuration Tab"
+    },
+    {
+      "filename": "provisioning_tab_2_netflow-configuration.png",
+      "title": "Integration & Provisioning - Netflow Configuration Tab"
+    },
+    {
+      "filename": "bgp-routing.png",
+      "title": "BGP Routing Management"
+    },
+    {
+      "filename": "bgp-routing_tab_1_announced-prefixes.png",
+      "title": "BGP Routing Management - Announced Prefixes Tab"
+    },
+    {
+      "filename": "bgp-routing_tab_2_peering-info.png",
+      "title": "BGP Routing Management - Peering Info Tab"
+    },
+    {
+      "filename": "bgp-routing_tab_3_submission-history.png",
+      "title": "BGP Routing Management - Submission History Tab"
+    },
+    {
+      "filename": "bgp-routing_tab_4_path-analysis.png",
+      "title": "BGP Routing Management - Path Analysis Tab"
+    },
+    {
+      "filename": "security-center.png",
+      "title": "Security & Threat Center"
+    },
+    {
+      "filename": "security-center_tab_1_ddos-attacks.png",
+      "title": "Security & Threat Center - DDoS Attacks Tab"
+    },
+    {
+      "filename": "security-center_tab_2_bgp-threats.png",
+      "title": "Security & Threat Center - BGP Threats Tab"
+    },
+    {
+      "filename": "security-center_tab_3_blocklist.png",
+      "title": "Security & Threat Center - Blocklist Tab"
+    },
+    {
+      "filename": "security-center_tab_4_malicious-ips_part1.png",
+      "title": "Security & Threat Center - Malicious IPs Tab"
+    },
+    {
+      "filename": "security-center_tab_4_malicious-ips_part2.png",
+      "title": "Security & Threat Center - Malicious IPs Tab (continued 2)"
+    },
+    {
+      "filename": "alerts_part1.png",
+      "title": "Alerts & Notifications"
+    },
+    {
+      "filename": "alerts_part2.png",
+      "title": "Alerts & Notifications (continued 2)"
+    },
+    {
+      "filename": "alerts_tab_1_active-alerts_part1.png",
+      "title": "Alerts & Notifications - Active Alerts Tab"
+    },
+    {
+      "filename": "alerts_tab_1_active-alerts_part2.png",
+      "title": "Alerts & Notifications - Active Alerts Tab (continued 2)"
+    },
+    {
+      "filename": "alerts_tab_2_alert-history.png",
+      "title": "Alerts & Notifications - Alert History Tab"
+    },
+    {
+      "filename": "alerts_tab_3_preferences_part1.png",
+      "title": "Alerts & Notifications - Preferences Tab"
+    },
+    {
+      "filename": "alerts_tab_3_preferences_part2.png",
+      "title": "Alerts & Notifications - Preferences Tab (continued 2)"
+    },
+    {
+      "filename": "support-tickets.png",
+      "title": "Support Tickets"
+    },
+    {
+      "filename": "support-tickets_tab_1_all-tickets-(4).png",
+      "title": "Support Tickets - All Tickets (4) Tab"
+    },
+    {
+      "filename": "support-tickets_tab_2_active-(2).png",
+      "title": "Support Tickets - Active (2) Tab"
+    },
+    {
+      "filename": "support-tickets_tab_3_resolved-(2).png",
+      "title": "Support Tickets - Resolved (2) Tab"
+    },
+    {
+      "filename": "documents.png",
+      "title": "Document Management"
+    },
+    {
+      "filename": "registration.png",
+      "title": "ISP Registration"
+    },
+    {
+      "filename": "settings.png",
+      "title": "Settings"
+    },
+    {
+      "filename": "settings_tab_1_general.png",
+      "title": "Settings - General Tab"
+    },
+    {
+      "filename": "settings_tab_2_alerts-&-notifications.png",
+      "title": "Settings - Alerts & Notifications Tab"
+    },
+    {
+      "filename": "settings_tab_3_thresholds.png",
+      "title": "Settings - Thresholds Tab"
+    },
+    {
+      "filename": "settings_tab_4_emergency-contacts.png",
+      "title": "Settings - Emergency Contacts Tab"
+    },
+    {
+      "filename": "settings_tab_5_integration.png",
+      "title": "Settings - Integration Tab"
+    }
+  ]
+}
